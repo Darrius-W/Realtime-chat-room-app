@@ -1,5 +1,11 @@
 import "./App.css"
 import { useState, useEffect, useRef } from "react"
+import io from "socket.io-client"
+
+// Establishing Socket IO connection with desired port
+let endpoint = "http://localhost:5000";
+let socket = io.connect(`${endpoint}`);
+
 
 export default function App(){
   return(
@@ -15,6 +21,7 @@ export default function App(){
     </>
   );
 }
+  
 
 // Displays the current user
 function CurrentUser(){
@@ -26,6 +33,7 @@ function CurrentUser(){
     </>
   );
 }
+
 
 // Displays & inputs chat room messages
 function ChatWindow(){
@@ -39,17 +47,27 @@ function ChatWindow(){
     return <div ref={elementRef} />;
   };
 
-  // Store newly inputed messages into conversation array
-  function handleSendMessage(event){
-    event.preventDefault();
-    setMessages([...messages, "User [Time/Date]: " + value]);
-    event.target.reset()
-  }
-
-  // Target and store user's current message
+  // Target and store state of user's current message
   function handleChange(event){
     setValue(event.target.value);
   }
+
+  // Process single user's submitted message
+  const handleSendMessage = (event) => {
+    event.preventDefault(); // prevent page refresh
+    setValue(event.target.value) // grab user's submitted message
+    socket.emit("message", value) // pass user msg to server layer
+    event.target.reset() // clear input field
+  }
+
+  // Store current message in message array for easy display
+  useEffect(() => {
+    socket.on("received_message", (data) => { // catch server response
+      setMessages([...messages, "User [Time/Date]: " + data]); // store new msg in msgs array
+      //alert(data) // Message gets printed multiple times
+    })
+  })
+
  
   return(
     <>
@@ -63,13 +81,13 @@ function ChatWindow(){
 
         <div className="chatInput">
           <form onSubmit={handleSendMessage}>
-            <label for="userInput">
+            <label htmlFor="userInput">
               <input
                 id="userInput"
                 type="text"
                 defaultValue={""}
                 placeholder="Message..."
-                onInput={handleChange} 
+                onInput={handleChange}
                 required 
                 autoComplete="off"
               />
@@ -81,6 +99,7 @@ function ChatWindow(){
     </>
   );
 }
+
 
 // Displays all current members of the chat room
 function ChatMembers(){
