@@ -24,15 +24,7 @@ export default function Login(){
         }
     };
 
-    const handleLogout = async () => {
-        try{
-            const response = await axios.post('http://localhost:5000/Logout', {}, { withCredentials: true });
-            setMessage('Logged out successfully');
-            setLoggedInUser(null);
-        } catch(error){
-            setMessage('Error logging out');
-        }
-    };
+    
 
     const checkSession = async () => {
         try{
@@ -51,12 +43,6 @@ export default function Login(){
     return(
         <div className="Auth-login">
             <h1>Login</h1>
-            {loggedInUser ? (
-                <>
-                    <p>Logged in as: {loggedInUser}</p>
-                    <button onClick={handleLogout}>Logout</button>
-                </>
-            ) : (
                 <>
                     <div>
                         <input
@@ -80,7 +66,6 @@ export default function Login(){
                     <button onClick={handleLogin}>Login</button><br></br><br></br>
                     <Link to="/Signup">Create Account</Link>
                 </>
-            )}
             <p>{message}</p>
         </div>
     );
