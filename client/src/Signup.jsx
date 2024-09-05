@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 export default function Signup(){
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
+    const [userPassword, setPassword] = useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = { userName, userEmail };
+        const data = { userName, userEmail, userPassword };
     
         try {
             const response = await fetch('/newUser', {
@@ -49,11 +50,18 @@ export default function Signup(){
                         id="userEmail"
                         value = { userEmail }
                         onChange={(event) => setUserEmail(event.target.value)}
-                        required placeholder="Email"
+                        required
+                        placeholder="Email"
                         autoComplete="off" />
                 </label><br></br>
                 <label htmlFor="password">
-                    <input type="password" id="password" required placeholder="Password" />
+                    <input
+                        type="password"
+                        id="userPassword"
+                        value = { userPassword }
+                        onChange={(event) => setPassword(event.target.value)}
+                        required
+                        placeholder="Password" />
                 </label><br></br>
                 <label htmlFor="passwordConfirm">
                     <input type="password" id="passwordConfirm" required placeholder="Confirm Password" />

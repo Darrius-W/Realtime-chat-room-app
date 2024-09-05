@@ -1,35 +1,82 @@
-import { useState } from "react"
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Login(){
 
-    const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState('');
+    const [userPassword, setPassword] = useState('');
+    const [message, setMessage] = useState('')
+    const [loggedInUser, setLoggedInUser] = useState(null);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const data = { userName };
-    }
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
+            setMessage('Logged in successfully');
+            setLoggedInUser(response.data.userName)
+        } catch(error){
+            setMessage('Error logging in');
+        }
+    };
+
+    const handleLogout = async () => {
+        try{
+            const response = await axios.post('http://localhost:5000/Logout', {}, { withCredentials: true });
+            setMessage('Logged out successfully');
+            setLoggedInUser(null);
+        } catch(error){
+            setMessage('Error logging out');
+        }
+    };
+
+    const checkSession = async () => {
+        try{
+            const response = await axios.get('http://localhost:5000/Session-check', { withCredentials: true });
+            setLoggedInUser(response.data.userName);
+        } catch(error) {
+            setLoggedInUser(null);
+        }
+    };
+
+    useEffect(() => {
+        checkSession();
+    }, []);
+
 
     return(
         <div className="Auth-login">
             <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="userName">
-                    <input
-                        type="text"
+            {loggedInUser ? (
+                <>
+                    <p>Logged in as: {loggedInUser}</p>
+                    <button onClick={handleLogout}>Logout</button>
+                </>
+            ) : (
+                <>
+                    <div>
+                        <input
                         id="userName"
-                        value = { userName }
-                        onChange={(event) => setUserName(event.target.value)}
-                        required
+                        type="text"
                         placeholder="Username"
-                        autoComplete="off" />
-                </label><br></br>
-                <label htmlFor="password">
-                    <input type="password" id="password" required placeholder="Password" />
-                </label><br></br>
-                <button type="submit" id="signup-btn">Login</button>
-            </form><br></br>
-            <Link to="/Signup">Create Account</Link>
+                        value={userName}
+                        autoComplete="off"
+                        required
+                        onChange={(e) => setUserName(e.target.value)}
+                        /><br></br>
+                        <input
+                        id="userPassword"
+                        type="password"
+                        placeholder="Password"
+                        value={userPassword}
+                        required
+                        onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button onClick={handleLogin}>Login</button><br></br><br></br>
+                    <Link to="/Signup">Create Account</Link>
+                </>
+            )}
+            <p>{message}</p>
         </div>
     );
 }
