@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 export default function Login(){
 
@@ -8,12 +9,16 @@ export default function Login(){
     const [userPassword, setPassword] = useState('');
     const [message, setMessage] = useState('')
     const [loggedInUser, setLoggedInUser] = useState(null);
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
             const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
             setMessage('Logged in successfully');
             setLoggedInUser(response.data.userName)
+            // Redirect to joinroom page
+            navigate("/Joinroom");
+
         } catch(error){
             setMessage('Error logging in');
         }

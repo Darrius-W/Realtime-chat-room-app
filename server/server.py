@@ -54,7 +54,7 @@ def logout():
 def session_check():
     username = session.get('userName')
     if username:
-        return jsonify({"logged_in_as": username})
+        return jsonify(username)
     return jsonify({"message": "Not logged in"}), 401
 
 if __name__ == '__main__':
