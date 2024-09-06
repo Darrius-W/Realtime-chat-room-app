@@ -1,13 +1,39 @@
 import "./Chatroom.css"
 import { useState, useEffect, useRef } from "react"
 import io from "socket.io-client"
+import { useLocation } from "react-router-dom"
 
 // Establishing Socket IO connection with desired port
-let endpoint = "http://localhost:5000";
-let socket = io.connect(`${endpoint}`);
+const endpoint = "http://localhost:5000";
+const socket = io.connect(`${endpoint}`);
 
 
 export default function Chatroom(){
+
+  const location = useLocation();
+  const data = location.state;
+  const [userName, setUserName] = useState(data.name);  
+  const [room, setRoom] = useState(data.room);
+
+  /*useEffect(() => {
+    fetch('/Room-check')
+        .then(response => response.json())
+        .then(roomData => setRoom(roomData));
+
+    fetch('/Session-check')
+    .then(response => response.json())
+    .then(nameData => setUserName(nameData));
+  
+  }, []);*/
+  
+  const joinRoom = () => {
+    if (userName !== '' && room !== '') {
+      socket.emit('join', { userName, room });
+    }
+  }
+
+  joinRoom();
+
   return(
     <>
       <div className="chatRoom">
@@ -38,8 +64,37 @@ function CurrentUser(){
 
 // Displays & inputs chat room messages
 function ChatWindow(){
-  const [value, setValue] = useState(""); // User's current message
+  const location = useLocation();
+  const data = location.state;
+  const [userName, setUserName] = useState(data.name);
+  const [value, setValue] = useState(''); // User's current message
   const [messages, setMessages] = useState([]); // Array of chat room messages
+  const [room, setRoom] = useState(data.room);
+
+  useEffect(() => {
+    /*fetch('/Room-check')
+        .then(response => response.json())
+        .then(roomData => setRoom(roomData));
+
+    fetch('/Session-check')
+    .then(response => response.json())
+    .then(nameData => setUserName(nameData));*/
+
+    socket.on("received_message", (data) => { // catch server response
+      //setMessages([...messages, "User [Time/Date]: " + data.message]); // store new msg in msgs array
+      setMessages((prevMessages) => [...prevMessages, data.message]);
+    });
+    
+    return () => {
+      socket.off('received_message');
+    };
+  }, []);
+  
+  /*const joinRoom = () => {
+    if (userName !== '' && room !== '') {
+      socket.emit('join', { userName, room });
+    }
+  };*/
 
   // Keeps display at most recent messages
   const AlwaysScrollToBottom = () => {
@@ -55,19 +110,31 @@ function ChatWindow(){
 
   // Process single user's submitted message
   const handleSendMessage = (event) => {
+    event.preventDefault();
+    //joinRoom();
+    if (value !== ''){
+      socket.emit('message', { userName, room, value})
+      setValue('');
+    }
+    event.target.reset() // clear input field
+    /*
     event.preventDefault(); // prevent page refresh
     setValue(event.target.value) // grab user's submitted message
-    socket.emit("message", value) // pass user msg to server layer
+    socket.emit("message", {value, room}) // pass user msg to server layer
     event.target.reset() // clear input field
+    */
   }
+  
 
   // Store current message in message array for easy display
-  useEffect(() => {
+  /*useEffect(() => {
     socket.on("received_message", (data) => { // catch server response
-      setMessages([...messages, "User [Time/Date]: " + data]); // store new msg in msgs array
+      alert("here")
+      setMessages([...messages, "User [Time/Date]: " + data.message]); // store new msg in msgs array
+      //setMessages((...messages) => [...messages, data.message]);
       //alert(data) // Message gets printed multiple times
     })
-  })
+  })*/
 
  
   return(

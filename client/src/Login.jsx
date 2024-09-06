@@ -17,7 +17,8 @@ export default function Login(){
             setMessage('Logged in successfully');
             setLoggedInUser(response.data.userName)
             // Redirect to joinroom page
-            navigate("/Joinroom");
+            const data = { name: userName }
+            navigate("/Joinroom", { state: data });
 
         } catch(error){
             setMessage('Error logging in');
@@ -26,18 +27,18 @@ export default function Login(){
 
     
 
-    const checkSession = async () => {
+    /*const checkSession = async () => {
         try{
             const response = await axios.get('http://localhost:5000/Session-check', { withCredentials: true });
             setLoggedInUser(response.data.userName);
         } catch(error) {
             setLoggedInUser(null);
         }
-    };
+    };*/
 
-    useEffect(() => {
+    /*useEffect(() => {
         checkSession();
-    }, []);
+    }, []);*/
 
 
     return(

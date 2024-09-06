@@ -1,5 +1,5 @@
 from flask import Flask, session, request, jsonify, redirect, url_for
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_session import Session
 from models import users
 from db import db
@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_TYPE'] = 'filesystem' # Store sessions in server's filesystem
 app.config['SESSION_PERMANENT'] = False
 
-socketio = SocketIO(app, cors_allowed_origins="*") # Initialize SocketIO
+socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initialize SocketIO
 db.init_app(app)
 Session(app)
 CORS(app, supports_credentials=True)
@@ -24,8 +24,11 @@ with app.app_context():
 # Catch client layer's emitted message
 @socketio.on("message")
 def handleMessage(data):
-    print("User connected: Value " + data)
-    socketio.emit("received_message", data) # Pass user msg to all clients
+    room = data['room']
+    message = data['value']
+    username = data['userName']
+    emit("received_message", {'message': f'{username}: {message}'}, room=room) # Pass user msg to all clients
+    #emit("received_message", {'message': message}, room=room)
 
 @app.route('/newUser', methods=['POST', 'GET'])
 def add_user():
@@ -56,6 +59,38 @@ def session_check():
     if username:
         return jsonify(username)
     return jsonify({"message": "Not logged in"}), 401
+
+@app.route('/Room-check', methods=['GET'])
+def room_check():
+    room = session.get('room')
+    if room:
+        return jsonify(room)
+    return jsonify({"message": "User has no Room"}), 401
+
+# Route to join a specific room
+@app.route('/join_room_route', methods=['POST'])
+def join_room_route():
+    data = request.get_json()
+    room = data['room']
+    
+    session['room'] = room # Save room session
+    return jsonify({'message': f'Joining room {room}'})
+
+# Socket connection event to handle joining room
+@socketio.on('join')
+def on_join(data):
+    username = data['userName']
+    room = data['room']
+    join_room(room)
+    emit('received_message', {'message': f'{username} has entered the room {room}'}, room=room)
+    
+# Socket connection event to handle leaving room
+@socketio.on('leave')
+def on_leave(data):
+    username= data['userName']
+    room = data['room']
+    leave_room(room)
+    send(f'{username} has left the room.', room=room)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
