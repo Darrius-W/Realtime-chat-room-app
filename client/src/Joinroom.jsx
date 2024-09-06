@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
-import io from 'socket.io-client'
+//import io from 'socket.io-client'
 
-const socket = io.connect('http://localhost:5000');
+//const socket = io.connect('http://localhost:5000');
 
 export default function Joinroom(){
 
@@ -34,9 +34,9 @@ export default function Joinroom(){
 
 
     const handleJoinRoom = () => {
-        if (userName !== '' && room !== '') {
+        /*if (userName !== '' && room !== '') {
           socket.emit('join', { userName, room });
-        }
+        }*/
         const data = { name: userName, room: room}
         navigate("/Chatroom", { state: data });
       };

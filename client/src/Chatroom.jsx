@@ -51,11 +51,14 @@ export default function Chatroom(){
 
 // Displays the current user
 function CurrentUser(){
+  const location = useLocation();
+  const data = location.state;
+  const [userName, setUserName] = useState(data.name);
 
   return(
     <>
       <div className="currUser">
-        <h2>John Doe</h2>
+        <h2>{ userName }</h2>
       </div>
     </>
   );
