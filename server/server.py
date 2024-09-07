@@ -82,7 +82,7 @@ def on_join(data):
     username = data['userName']
     room = data['room']
     join_room(room)
-    emit('received_message', {'message': f'{username} has entered the room {room}'}, room=room)
+    emit('received_message', {'message': f'{username} has entered room {room}'}, room=room)
     
 # Socket connection event to handle leaving room
 @socketio.on('leave')
