@@ -1,15 +1,17 @@
 import { useState } from "react"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Signup(){
 
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = { userName, userEmail, userPassword };
+        const userNameData = { name: userName }
     
         try {
             const response = await fetch('/newUser', {
@@ -28,6 +30,8 @@ export default function Signup(){
         } catch (error) {
             console.error('Error:', error);
         }
+
+        navigate("/Joinroom", { state: userNameData });
     };
     
 

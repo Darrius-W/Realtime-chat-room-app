@@ -19,6 +19,7 @@ CORS(app, supports_credentials=True)
  
 with app.app_context():
     db.create_all()
+    
 
 
 # Catch client layer's emitted message
@@ -90,7 +91,7 @@ def on_leave(data):
     username= data['userName']
     room = data['room']
     leave_room(room)
-    send(f'{username} has left the room.', room=room)
+    emit("received_message", {'message': f'{username} has left room {room}'}, room=room)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

@@ -1,7 +1,7 @@
 import "./Chatroom.css"
 import { useState, useEffect, useRef } from "react"
 import io from "socket.io-client"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 // Establishing Socket IO connection with desired port
 const endpoint = "http://localhost:5000";
@@ -14,6 +14,8 @@ export default function Chatroom(){
   const data = location.state;
   const [userName, setUserName] = useState(data.name);  
   const [room, setRoom] = useState(data.room);
+  const navigate = useNavigate();
+  const userNameData = { name: userName }
 
   /*useEffect(() => {
     fetch('/Room-check')
@@ -34,6 +36,14 @@ export default function Chatroom(){
 
   joinRoom();
 
+  const leaveRoom = () => {
+    if (userName !== '' && room !== '') {
+      socket.emit('leave', { userName, room });
+    }
+    navigate('/Joinroom', { state: userNameData });
+  }
+
+
   return(
     <>
       <div className="chatRoom">
@@ -44,6 +54,7 @@ export default function Chatroom(){
         {/* Chat Room Members */}
         <ChatMembers />
       </div>
+      <button id="leaveBtn" onClick={ leaveRoom }>Leave Room</button>
     </>
   );
 }
@@ -98,6 +109,8 @@ function ChatWindow(){
       socket.emit('join', { userName, room });
     }
   };*/
+
+  
 
   // Keeps display at most recent messages
   const AlwaysScrollToBottom = () => {
@@ -163,7 +176,7 @@ function ChatWindow(){
                 autoComplete="off"
               />
             </label>
-            <button id="sendMsg" type="submit">Send</button>
+            <button id="sendMsg" type="submit">Send</button><br></br><br></br>
           </form>
         </div>
       </div>
@@ -174,16 +187,27 @@ function ChatWindow(){
 
 // Displays all current members of the chat room
 function ChatMembers(){
+
   return(
     <>
-      <div className="memberDisp">
+      <div>
+        <h2>Members in room: {/*room*/}</h2>
+        <ul>
+          {/*users.map((user, index) => (
+            <li key={index}>{user}</li>
+          ))*/}
+        </ul>
+      </div>
+
+
+      {/*<div className="memberDisp">
         <h2>Member List</h2>
         <ul>
           <li>Gary</li>
           <li>John</li>
           <li>Tyler</li>
         </ul>
-      </div>
+      </div>*/}
     </>
   );
 }
