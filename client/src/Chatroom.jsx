@@ -2,6 +2,7 @@ import "./Chatroom.css"
 import { useState, useEffect, useRef } from "react"
 import io from "socket.io-client"
 import { useLocation, useNavigate } from "react-router-dom"
+import axios from 'axios'
 
 // Establishing Socket IO connection with desired port
 const endpoint = "http://localhost:5000";
@@ -130,6 +131,7 @@ function ChatWindow(){
     //joinRoom();
     if (value !== ''){
       socket.emit('message', { userName, room, value})
+      socket.emit('updateMemList', { room })
       setValue('');
     }
     event.target.reset() // clear input field
@@ -188,14 +190,25 @@ function ChatWindow(){
 // Displays all current members of the chat room
 function ChatMembers(){
 
+  const [userList, setUserList] = useState([]);
+  const [room, setRoom] = useState('');
+
+  useEffect(() => {
+
+    socket.on("updateMems", (data) => { // catch server response
+      setRoom(data.room);
+      setUserList(data.members);
+    });
+  });
+
   return(
     <>
       <div>
-        <h2>Members in room: {/*room*/}</h2>
+        <h2>Members in room {room}:</h2>
         <ul>
-          {/*users.map((user, index) => (
+          {userList.map((user, index) => (
             <li key={index}>{user}</li>
-          ))*/}
+          ))}
         </ul>
       </div>
 

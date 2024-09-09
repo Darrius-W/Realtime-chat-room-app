@@ -20,6 +20,8 @@ CORS(app, supports_credentials=True)
 with app.app_context():
     db.create_all()
     
+# Dictionary of current users
+rooms = {}
 
 
 # Catch client layer's emitted message
@@ -83,6 +85,15 @@ def on_join(data):
     username = data['userName']
     room = data['room']
     join_room(room)
+
+    if room not in rooms:
+        rooms[room] = []
+        
+    if username not in rooms[room]:
+        rooms[room].append(username)
+        
+    updateMembers(room)
+        
     emit('received_message', {'message': f'{username} has entered room {room}'}, room=room)
     
 # Socket connection event to handle leaving room
@@ -91,7 +102,23 @@ def on_leave(data):
     username= data['userName']
     room = data['room']
     leave_room(room)
+    
+    if room not in rooms:
+        rooms[room] = []
+        
+    if username in rooms[room]:
+        rooms[room].remove(username)
+        
+    updateMembers(room)
+        
     emit("received_message", {'message': f'{username} has left room {room}'}, room=room)
+    
+
+# Route to update current member list in room
+@socketio.on('updateMemList')
+def updateMembers(room):
+    emit("updateMems", {'room': room, 'members': rooms[room]}, room=room)
+    
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
