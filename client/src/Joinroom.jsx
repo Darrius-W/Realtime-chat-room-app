@@ -14,11 +14,6 @@ export default function Joinroom(){
     const [message, setMessage] = useState('')
     const [room, setRoom] = useState('');
 
-    /*useEffect(() => {
-        fetch('/Session-check')
-            .then(response => response.json())
-            .then(data => setUserName(data));
-    })*/
 
     const handleLogout = async () => {
         try{
