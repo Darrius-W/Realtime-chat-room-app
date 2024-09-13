@@ -1,0 +1,87 @@
+.login-stack{
+    height: 75vh;
+    transform: translate(0%, 15%);
+}
+
+.signup-stack{
+    height: 95vh;
+    transform: translate(0%, 2%);
+}
+
+.custom-container{
+    background: rgba(0,0,0,.6);
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+}
+
+.custom-input.custom-input{
+    outline: none;
+    background: transparent;
+    color: #fff;
+    border: none;
+    border-bottom: 1px solid #fff;
+    border-radius: 0%;
+}
+
+.custom-input.custom-input::placeholder{
+    color: #fff;
+}
+
+.custom-input.custom-input:focus{    
+    background-color: #fff;
+    color: #030804;
+    border-radius: 5px;
+}
+
+.custom-input.custom-input:focus::placeholder{
+    color: #030804;
+}
+
+.custom-btn.custom-btn{
+    background-color: #030804;
+    color: #fff;
+    border: none;
+    letter-spacing: 2px;
+}
+
+.custom-btn.custom-btn:hover {
+    opacity: 0.6;
+    cursor: pointer;
+    background-color: #030804;
+}
+
+@media screen and (max-width: 768px) {
+    .login-stack{
+      height: 100vh;
+      transform: translate(0%, 0%);
+    }
+
+    .signup-stack{
+        height: 100vh;
+        transform: translate(0%, 0%);
+      }
+}
+
+@media screen and (max-width: 600px) {
+    .login-stack{
+      height: 100vh;
+      transform: translate(0%, 0%);
+    }
+
+    .signup-stack{
+        height: 100vh;
+        transform: translate(0%, 0%);
+      }
+}
+  
+@media screen and (max-width: 400px) {
+    .login-stack{
+        height: 100vh;
+        transform: translate(0%, 0%);
+    }
+
+    .signup-stack{
+        height: 100vh;
+        transform: translate(0%, 0%);
+      }
+}

@@ -1,5 +1,9 @@
 import { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom';
+import Stack from 'react-bootstrap/Stack';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import './App.css'
 
 export default function Signup(){
 
@@ -36,44 +40,48 @@ export default function Signup(){
     
 
     return(
-        <div className="Auth-signup">
-            <h1>Signup</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="userName">
-                    <input
+        <Form onSubmit={handleSubmit}>
+            <Stack className="signup-stack custom-container justify-content-center col-md-4 gap-4 px-4 mx-auto">
+                <h1 className="p-2 mx-auto" style={{ color: '#fff', fontWeight: '600'}}>Sign up</h1>
+                    <Form.Control
+                        className="custom-input p-2"
                         type="text"
                         id="userName"
                         value = { userName }
                         onChange={(event) => setUserName(event.target.value)}
                         required
                         placeholder="Username"
-                        autoComplete="off" />
-                </label><br></br>
-                <label htmlFor="userEmail">
-                    <input
+                        autoComplete="off"
+                    />
+                    <Form.Control
+                        className="custom-input p-2"
                         type="text"
                         id="userEmail"
                         value = { userEmail }
                         onChange={(event) => setUserEmail(event.target.value)}
                         required
                         placeholder="Email"
-                        autoComplete="off" />
-                </label><br></br>
-                <label htmlFor="password">
-                    <input
+                        autoComplete="off"
+                    />
+                    <Form.Control
+                        className="custom-input p-2"
                         type="password"
                         id="userPassword"
                         value = { userPassword }
                         onChange={(event) => setPassword(event.target.value)}
                         required
-                        placeholder="Password" />
-                </label><br></br>
-                <label htmlFor="passwordConfirm">
-                    <input type="password" id="passwordConfirm" required placeholder="Confirm Password" />
-                </label><br></br>
-                <button type="submit" id="signup-btn">Create Account</button>
-            </form><br></br>
-            <Link to="/">Login</Link>
-        </div>
+                        placeholder="Password"
+                    />
+                    <Form.Control
+                        className="custom-input p-2"
+                        type="password"
+                        id="passwordConfirm"
+                        required
+                        placeholder="Confirm Password"
+                    />
+                    <Button className="custom-btn p-2" variant="primary" type="submit" id="signup-btn">Create Account</Button>
+                    <p className="p-2 mx-auto" style={{ color: '#fff' }}>Already have an account? <Link to="/" style={{ textDecoration: 'none', textWrap: 'nowrap' }}>Login</Link></p>
+            </Stack>
+        </Form>
     );
 }

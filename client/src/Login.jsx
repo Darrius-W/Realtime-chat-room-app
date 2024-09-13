@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Stack from 'react-bootstrap/Stack';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Image from 'react-bootstrap/Image';
-import './Login.css'
+import './App.css'
 
 export default function Login(){
 
@@ -35,10 +34,10 @@ export default function Login(){
 
     return(
         <Form onSubmit={ handleLogin }>
-            <Stack id="login-container" className="justify-content-center col-md-4 gap-4 px-4 mx-auto">
+            <Stack className="login-stack custom-container justify-content-center col-md-4 gap-4 px-4 mx-auto">
                 <h1 className="p-2 mx-auto" style={{ color: '#fff', fontWeight: '600'}}>Sign In</h1>
                 <Form.Control
-                    className="p-2"
+                    className="custom-input p-2"
                     id="userName"
                     type="text"
                     placeholder="Username"
@@ -48,7 +47,7 @@ export default function Login(){
                     onChange={(e) => setUserName(e.target.value)}
                 />
                 <Form.Control
-                    className="p-2"
+                    className="custom-input p-2"
                     id="userPassword"
                     type="password"
                     placeholder="Password"
@@ -56,7 +55,7 @@ export default function Login(){
                     required
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <Button id="login-btn" className="p-2" variant="primary" type="submit">Login</Button>
+                <Button id="login-btn" className="custom-btn p-2" variant="primary" type="submit">Login</Button>
                 <p className="p-2 mx-auto" style={{ color: '#fff' }}>Not registered? <Link to="/Signup" style={{ textDecoration: 'none', textWrap: 'nowrap' }}>Create Account</Link></p>
             </Stack>
         </Form>
