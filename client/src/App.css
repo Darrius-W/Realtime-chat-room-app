@@ -8,6 +8,11 @@
     transform: translate(0%, 2%);
 }
 
+.join-stack{
+    height: 85vh;
+    transform: translate(0%, 8%);
+}
+
 .custom-container{
     background: rgba(0,0,0,.6);
     border-radius: 10px;
@@ -50,38 +55,35 @@
     background-color: #030804;
 }
 
+.logout-btn.logout-btn{
+    color: #fff;
+    border: none;
+    letter-spacing: 2px;
+    outline: none;
+}
+
+.logout-btn:hover{
+    opacity: 0.6;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
-    .login-stack{
+    .login-stack, .signup-stack, .join-stack{
       height: 100vh;
       transform: translate(0%, 0%);
     }
-
-    .signup-stack{
-        height: 100vh;
-        transform: translate(0%, 0%);
-      }
 }
 
 @media screen and (max-width: 600px) {
-    .login-stack{
+    .login-stack, .signup-stack, .join-stack{
       height: 100vh;
       transform: translate(0%, 0%);
     }
-
-    .signup-stack{
-        height: 100vh;
-        transform: translate(0%, 0%);
-      }
 }
   
 @media screen and (max-width: 400px) {
-    .login-stack{
+    .login-stack, .signup-stack, .join-stack{
         height: 100vh;
         transform: translate(0%, 0%);
     }
-
-    .signup-stack{
-        height: 100vh;
-        transform: translate(0%, 0%);
-      }
 }

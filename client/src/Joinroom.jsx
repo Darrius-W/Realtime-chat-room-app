@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
-//import io from 'socket.io-client'
+import Stack from 'react-bootstrap/Stack';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import './App.css'
 
 //const socket = io.connect('http://localhost:5000');
 
@@ -53,21 +56,23 @@ export default function Joinroom(){
     }*/
 
     return(
-        <div>
-            <h1>Join Room</h1>
-            <h2>Welcome, { userName }</h2>
-            <div>
-                <p>Enter chat room code:</p>
-                <input
+        <Form onSubmit={ handleJoinRoom }>
+            <Stack className="join-stack custom-container justify-content-center col-md-4 gap-4 px-4 mx-auto">
+                <h1 className="p-2 mx-auto" style={{ color: '#fff', fontWeight: '600'}}>Welcome, { userName }</h1>
+                <p className="p-2 mx-auto" style={{ color: '#fff' }}>Enter the room code to join a chat room:</p>
+                <Form.Control
+                    className="custom-input p-2"
                     type="text"
                     id="room-code"
                     placeholder="Enter Code"
+                    required
+                    autoComplete="off"
                     value={room}
                     onChange={(event) => setRoom(event.target.value)} />
-                <button onClick={handleJoinRoom}>Join Room</button>
-            </div><br></br>
-            <h2>Current Rooms:</h2><br></br>
-            <button type="submit" onClick={handleLogout}>Logout</button>
-        </div>
+                <Button className="custom-btn p-2" variant="primary" id="join-btn" type="submit">Join Room</Button>
+                <p className="mx-auto" style={{ color: '#fff' }}>Or</p>
+                <Button className="logout-btn bg-danger p-2" onClick={handleLogout}>Logout</Button>
+            </Stack>
+        </Form>
     );
 }
