@@ -59,7 +59,7 @@ export default function Joinroom(){
         <Form onSubmit={ handleJoinRoom }>
             <Stack className="join-stack custom-container justify-content-center col-md-4 gap-4 px-4 mx-auto">
                 <h1 className="p-2 mx-auto" style={{ color: '#fff', fontWeight: '600'}}>Welcome, { userName }</h1>
-                <p className="p-2 mx-auto" style={{ color: '#fff' }}>Enter the room code to join a chat room:</p>
+                <p className="p-2 mx-auto" style={{ color: '#fff' }}>Enter the room's code to join a chat room:</p>
                 <Form.Control
                     className="custom-input p-2"
                     type="text"
@@ -71,7 +71,7 @@ export default function Joinroom(){
                     onChange={(event) => setRoom(event.target.value)} />
                 <Button className="custom-btn p-2" variant="primary" id="join-btn" type="submit">Join Room</Button>
                 <p className="mx-auto" style={{ color: '#fff' }}>Or</p>
-                <Button className="logout-btn bg-danger p-2" onClick={handleLogout}>Logout</Button>
+                <Button className="back-btn bg-danger p-2" onClick={handleLogout}>Logout</Button>
             </Stack>
         </Form>
     );

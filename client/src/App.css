@@ -13,6 +13,11 @@
     transform: translate(0%, 8%);
 }
 
+.chatroom-grid{
+    height: 90vh;
+    transform: translate(0%, 5%);
+}
+
 .custom-container{
     background: rgba(0,0,0,.6);
     border-radius: 10px;
@@ -55,35 +60,133 @@
     background-color: #030804;
 }
 
-.logout-btn.logout-btn{
+.back-btn.back-btn{
     color: #fff;
     border: none;
     letter-spacing: 2px;
     outline: none;
 }
 
-.logout-btn:hover{
+.back-btn:hover{
     opacity: 0.6;
     cursor: pointer;
 }
 
+.chatWindow{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 73vh;
+}
+
+.chatDisplay{
+    overflow-x: hidden;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
+.chat-container{
+    background: rgba(0,0,0,.6);
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+}
+
 @media screen and (max-width: 768px) {
-    .login-stack, .signup-stack, .join-stack{
+    .login-stack, .signup-stack, .join-stack, .chatroom-grid{
       height: 100vh;
       transform: translate(0%, 0%);
+    }
+
+    .chatroom-grid{
+        transform: translate(0%, 7%);
+    }
+
+    .custom-container{
+        border-radius: 0px;
+    }
+
+    .main-chat-container{
+        border-radius: 0px;
+        background: rgba(0,0,0,.6);
+        box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    }
+
+    .chat-container{
+        background: transparent;
+        border-radius: 0px;
+        box-shadow: 0 15px 25px rgba(0,0,0,0);
+    }
+
+    #sendMsg{
+        width: 100%;
+        padding: 1.2vh;
+        margin-top: 2vh;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .login-stack, .signup-stack, .join-stack{
+    .login-stack, .signup-stack, .join-stack, .chatroom-grid{
       height: 100vh;
       transform: translate(0%, 0%);
+    }
+
+    .chatroom-grid{
+        transform: translate(0%, 7%);
+    }
+
+    .custom-container{
+        border-radius: 0px;
+    }
+
+    .main-chat-container{
+        border-radius: 0px;
+        background: rgba(0,0,0,.6);
+        box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    }
+    
+    .chat-container{
+        background: transparent;
+        border-radius: 0px;
+        box-shadow: 0 15px 25px rgba(0,0,0,0);
+    }
+
+    #sendMsg{
+        width: 100%;
+        padding: 1.2vh;
+        margin-top: 2vh;
     }
 }
   
 @media screen and (max-width: 400px) {
-    .login-stack, .signup-stack, .join-stack{
+    .login-stack, .signup-stack, .join-stack, .chatroom-grid{
         height: 100vh;
         transform: translate(0%, 0%);
     }
+
+    .chatroom-grid{
+        transform: translate(0%, 7%);
+    }
+
+    .custom-container{
+        border-radius: 0px;
+    }
+
+    .main-chat-container{
+        border-radius: 0px;
+        background: rgba(0,0,0,.6);
+        box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    }
+    
+    .chat-container{
+        background: transparent;
+        border-radius: 0px;
+        box-shadow: 0 15px 25px rgba(0,0,0,0);
+    }
+
+    #sendMsg{
+        width: 100%;
+        padding: 1.2vh;
+        margin-top: 2vh;
+    }
 }
+/*w-100 p-3*/

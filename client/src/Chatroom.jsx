@@ -1,8 +1,15 @@
-import "./Chatroom.css"
+//import "./Chatroom.css"
 import { useState, useEffect, useRef } from "react"
 import io from "socket.io-client"
 import { useLocation, useNavigate } from "react-router-dom"
 import axios from 'axios'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import "./App.css"
 
 // Establishing Socket IO connection with desired port
 const endpoint = "http://localhost:5000";
@@ -37,26 +44,42 @@ export default function Chatroom(){
 
   joinRoom();
 
-  const leaveRoom = () => {
+  /*const leaveRoom = () => {
     if (userName !== '' && room !== '') {
       socket.emit('leave', { userName, room });
     }
     navigate('/Joinroom', { state: userNameData });
-  }
+  }*/
 
 
   return(
-    <>
-      <div className="chatRoom">
-        {/* Current Chat User */}
-        <CurrentUser />
-        {/* Display Window */}
-        <ChatWindow />
-        {/* Chat Room Members */}
-        <ChatMembers />
-      </div>
-      <button id="leaveBtn" onClick={ leaveRoom }>Leave Room</button>
-    </>
+    <Container fluid className="main-chat-container">
+      <Row className="justify-content-center">
+        <Col md={2} style={{width: '20vw'}}>
+          <Container className="chatroom-grid chat-container d-none d-md-block">
+             {/*Chat Room Members*/}
+            <ChatMembers />
+          </Container>
+        </Col>
+        <Col md={7}>
+          <Container className="chatroom-grid chat-container"/*style={{width: '100vw'}}*/>
+            <Row>
+              <Col>
+                {/* Current Chat User */}
+                <CurrentUser />
+              </Col>
+              {/*<Col>
+                <Button className="bg-danger back-btn" id="leaveBtn" onClick={ leaveRoom }>Leave Room</Button>
+              </Col>*/}
+            </Row>
+            <Row>
+              {/* Display Window */}
+              <ChatWindow />
+            </Row>
+          </Container>
+        </Col>
+      </Row>
+    </Container>
   );
 }
   
@@ -66,11 +89,24 @@ function CurrentUser(){
   const location = useLocation();
   const data = location.state;
   const [userName, setUserName] = useState(data.name);
+  const [room, setRoom] = useState(data.room);
+  const navigate = useNavigate();
+  const userNameData = { name: userName }
+
+  const leaveRoom = () => {
+    if (userName !== '' && room !== '') {
+      socket.emit('leave', { userName, room });
+    }
+    navigate('/Joinroom', { state: userNameData });
+  }
 
   return(
     <>
-      <div className="currUser">
-        <h2>{ userName }</h2>
+      <div className="currUser" style={{ borderBottom: '1px solid rgb(255, 255, 255, 0.1)' }}>
+        <Row>
+          <Col><h2 className="p-2 mx-auto" style={{ color: '#fff', fontWeight: '600'}}>Room: { room }</h2></Col>
+          <Col className="d-flex justify-content-end align-items-center"><Button className="bg-danger back-btn p-2" id="leaveBtn" onClick={ leaveRoom }>Exit Room</Button></Col>
+        </Row>
       </div>
     </>
   );
@@ -157,31 +193,36 @@ function ChatWindow(){
  
   return(
     <>
-      <div className="chatWindow">
-        <div className="chatDisplay">
+      <Container className="chatWindow">
+        <Container className="chatDisplay" style={{ height: '100vh'}}>
           {messages.map((msg, index) => (
-            <p key={index}>{msg}</p>
+            <p className="msg-list p-2 mx-auto" style={{ color: '#fff' }} key={index}>{msg}</p>
           ))}
           <AlwaysScrollToBottom />
-        </div>
+        </Container>
 
-        <div className="chatInput">
-          <form onSubmit={handleSendMessage}>
-            <label htmlFor="userInput">
-              <input
-                id="userInput"
-                type="text"
-                defaultValue={""}
-                placeholder="Message..."
-                onInput={handleChange}
-                required 
-                autoComplete="off"
-              />
-            </label>
-            <button id="sendMsg" type="submit">Send</button><br></br><br></br>
-          </form>
-        </div>
-      </div>
+        <Container className="chatInput" style={{paddingTop: '2vh', borderTop: '1px solid rgb(255, 255, 255, 0.1)'}}>
+          <Form onSubmit={handleSendMessage}>
+            <Row>
+              <Col md={9}>
+                <Form.Control
+                  className="custom-input p-2"
+                  id="userInput"
+                  type="text"
+                  defaultValue={""}
+                  placeholder="Type your message..."
+                  onInput={handleChange}
+                  required 
+                  autoComplete="off"
+                />
+              </Col>
+              <Col md={3} className="d-flex">
+                <Button className="d-flex custom-btn justify-content-center" id="sendMsg" type="submit">Send</Button>
+              </Col>
+            </Row>
+          </Form>
+        </Container>
+      </Container>
     </>
   );
 }
@@ -202,15 +243,15 @@ function ChatMembers(){
   });
 
   return(
-    <>
-      <div>
-        <h2>Members in room {room}:</h2>
-        <ul>
+    <Card className="bg-transparent" style={{border: 'none', borderBottom: 'none'}}>
+      <Card.Header as="h2" className="p-2 mx-auto" style={{ color: '#fff', fontWeight: '600', borderBottom: '1px solid rgb(255, 255, 255, 0.1)'}}>Online</Card.Header>
+      <Card.Body>
+        <ul style={{ listStyleType: 'none' }}>
           {userList.map((user, index) => (
-            <li key={index}>{user}</li>
+            <li className="p-2 mx-auto" style={{ color: '#fff' }} key={index}>{user}</li>
           ))}
         </ul>
-      </div>
+      </Card.Body>
 
 
       {/*<div className="memberDisp">
@@ -221,6 +262,6 @@ function ChatMembers(){
           <li>Tyler</li>
         </ul>
       </div>*/}
-    </>
+    </Card>
   );
 }
