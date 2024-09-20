@@ -1,1 +1,1 @@
-web: gunicorn realtimeChatApp.wsgi
+web: gunicorn server:app
