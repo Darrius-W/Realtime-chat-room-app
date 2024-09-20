@@ -28,6 +28,7 @@ export default function Login(){
 
         } catch(error){
             setMessage('Error logging in');
+            alert("ERROR: Invalid Credentials");
         }
     };
 

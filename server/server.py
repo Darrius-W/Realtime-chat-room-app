@@ -4,6 +4,7 @@ from flask_session import Session
 from models import users
 from db import db
 from flask_cors import CORS
+import bcrypt
 
 app = Flask(__name__) # Initialize flask app
 app.config['SECRET_KEY'] = 'secret!'
@@ -36,10 +37,14 @@ def handleMessage(data):
 @app.route('/newUser', methods=['POST', 'GET'])
 def add_user():
     data = request.get_json()
-    new_user = users(name=data['userName'], email=data['userEmail'], password=data['userPassword'])
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({'message': 'User added successfully!'}), 201
+    # If user already exists
+    if (users.query.filter_by(name=data['userName']).first()):
+        return jsonify({"message": "ERROR: Username Taken"}), 401
+    else:
+        new_user = users(name=data['userName'], email=data['userEmail'], password=data['userPassword'])
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({'message': 'User added successfully!'}), 201
 
 @app.route('/Login', methods=['POST'])
 def login():

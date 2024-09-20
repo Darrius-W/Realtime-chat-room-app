@@ -16,6 +16,7 @@ export default function Signup(){
         event.preventDefault();
         const data = { userName, userEmail, userPassword };
         const userNameData = { name: userName }
+        
     
         try {
             const response = await fetch('/newUser', {
@@ -28,14 +29,14 @@ export default function Signup(){
     
             if (response.ok) {
                 console.log('User added successfully!');
+                navigate("/Joinroom", { state: userNameData });
             } else {
                 console.error('Error adding user.');
+                alert("ERROR: Username Taken");
             }
         } catch (error) {
             console.error('Error:', error);
         }
-
-        navigate("/Joinroom", { state: userNameData });
     };
     
 
