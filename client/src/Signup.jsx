@@ -10,15 +10,20 @@ export default function Signup(){
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setPassword] = useState("");
+    const [confirmPwd, setConfirmPwd] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = { userName, userEmail, userPassword };
         const userNameData = { name: userName }
-        
     
         try {
+            if (userPassword != confirmPwd){
+                alert("ERROR: Passwords Do Not Match");
+                return;
+            }
+
             const response = await fetch('/newUser', {
                 method: 'POST',
                 headers: {
@@ -76,7 +81,9 @@ export default function Signup(){
                     <Form.Control
                         className="custom-input p-2"
                         type="password"
-                        id="passwordConfirm"
+                        id="confirmPwd"
+                        value = { confirmPwd }
+                        onChange={(event) => setConfirmPwd(event.target.value)}
                         required
                         placeholder="Confirm Password"
                     />
