@@ -25,7 +25,7 @@ export default function Login(){
             //setLoggedInUser(response.data.userName)
             // Redirect to joinroom page
             const data = { name: userName }
-            navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: data });
+            navigate("/Joinroom", { state: data });
 
         } catch(error){
             setMessage('Error logging in');

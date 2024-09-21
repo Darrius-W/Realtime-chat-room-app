@@ -34,7 +34,7 @@ export default function Signup(){
     
             if (response.ok) {
                 console.log('User added successfully!');
-                navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: userNameData });
+                navigate("/Joinroom", { state: userNameData });
             } else {
                 console.error('Error adding user.');
                 alert("ERROR: Username Taken");
