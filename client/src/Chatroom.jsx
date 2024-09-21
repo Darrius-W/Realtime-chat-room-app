@@ -12,7 +12,7 @@ import Card from 'react-bootstrap/Card';
 import "./App.css"
 
 // Establishing Socket IO connection with desired port
-const endpoint = "http://localhost:5000";
+const endpoint = "https://dw-realtime-chatroom-app.netlify.app/"; //"http://localhost:5000";
 const socket = io.connect(`${endpoint}`);
 
 
@@ -97,7 +97,7 @@ function CurrentUser(){
     if (userName !== '' && room !== '') {
       socket.emit('leave', { userName, room });
     }
-    navigate('/Joinroom', { state: userNameData });
+    navigate('https://dw-realtime-chatroom-app.netlify.app/Joinroom', { state: userNameData });
   }
 
   return(

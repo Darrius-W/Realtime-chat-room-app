@@ -16,7 +16,8 @@ app.config['SESSION_PERMANENT'] = False
 socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initialize SocketIO
 db.init_app(app)
 Session(app)
-CORS(app, supports_credentials=True)
+#CORS(app, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins":"*"}})
  
 with app.app_context():
     db.create_all()
