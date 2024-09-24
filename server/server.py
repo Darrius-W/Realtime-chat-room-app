@@ -1,3 +1,5 @@
+import eventlet
+eventlet.monkey_patch()
 from flask import Flask, session, request, jsonify, redirect, url_for
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_session import Session
@@ -13,7 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_TYPE'] = 'filesystem' # Store sessions in server's filesystem
 app.config['SESSION_PERMANENT'] = False
 
-socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initialize SocketIO
+socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False, async_mode='eventlet') # Initialize SocketIO
 db.init_app(app)
 Session(app)
 #CORS(app, supports_credentials=True)
@@ -135,4 +137,5 @@ def updateMembers(room):
     
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    #socketio.run(app, debug=True)
+    socketio.run(app, host='0.0.0.0', port=5000)
