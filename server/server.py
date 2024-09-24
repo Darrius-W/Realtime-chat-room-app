@@ -1,5 +1,3 @@
-import eventlet
-eventlet.monkey_patch()
 from flask import Flask, session, request, jsonify, redirect, url_for
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_session import Session
