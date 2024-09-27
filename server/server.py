@@ -2,9 +2,12 @@ from flask import Flask, session, request, jsonify, redirect, url_for
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_session import Session
 #from models import users
-from db import db
+#from db import db
 from flask_cors import CORS
 import bcrypt
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class users(db.Model):
     __tablename__ = 'users'
