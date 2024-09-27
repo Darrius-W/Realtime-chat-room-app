@@ -19,7 +19,7 @@ export default function Signup(){
         const userNameData = { name: userName }
     
         try {
-            if (userPassword != confirmPwd){
+            if (userPassword !== confirmPwd){
                 alert("ERROR: Passwords Do Not Match");
                 return;
             }
