@@ -12,7 +12,7 @@ import Card from 'react-bootstrap/Card';
 import "./App.css"
 
 // Establishing Socket IO connection with desired port
-const endpoint = "https://dw-realtime-chatroom-app.netlify.app/"; //"http://localhost:5000";
+const endpoint = "https://realtime-chat-room-app.onrender.com"; //"http://localhost:5000";
 const socket = io.connect(`${endpoint}`);
 
 
