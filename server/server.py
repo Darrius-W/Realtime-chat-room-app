@@ -1,4 +1,4 @@
-from flask import Flask, session, request, jsonify, redirect, url_for
+from flask import Flask, session, request, jsonify, redirect, url_for, send_from_directory
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_session import Session
 #from models import users
@@ -17,7 +17,7 @@ class users(db.Model):
     password = db.Column(db.String(255), unique=False, nullable=False)
 
 
-app = Flask(__name__) # Initialize flask app
+app = Flask(__name__, static_folder='static') # Initialize flask app
 app.config['SECRET_KEY'] = 'secret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -35,6 +35,10 @@ with app.app_context():
     
 # Dictionary of current users
 rooms = {}
+
+@app.route('/')
+def serve_react_app():
+    return send_from_directory(app.static_folder, 'index.html')
 
 # Hash the password
 def hashPwd(password):
