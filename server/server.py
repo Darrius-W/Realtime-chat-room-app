@@ -1,10 +1,17 @@
 from flask import Flask, session, request, jsonify, redirect, url_for
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_session import Session
-from models import users
+#from models import users
 from db import db
 from flask_cors import CORS
 import bcrypt
+
+class users(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(255), unique=False, nullable=False)
 
 def create_app():
     app = Flask(__name__) # Initialize flask app
