@@ -6,6 +6,7 @@ from flask_session import Session
 from flask_cors import CORS
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 db = SQLAlchemy()
 
@@ -19,7 +20,8 @@ class users(db.Model):
 
 app = Flask(__name__, static_folder='static') # Initialize flask app
 app.config['SECRET_KEY'] = 'secret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+SQLALCHEMY_DATABASE_URI = os.getenv('postgresql://chatroomapp_db_user:WMLMQVyUxXQCLyijRbHvFvPGTR6k5pCU@dpg-crscqrjtq21c73de7bd0-a/chatroomapp_db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_TYPE'] = 'filesystem' # Store sessions in server's filesystem
 app.config['SESSION_PERMANENT'] = False
