@@ -8,15 +8,6 @@ import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-db = SQLAlchemy()
-
-class users(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(255), unique=False, nullable=False)
-
 
 app = Flask(__name__, static_folder='static') # Initialize flask app
 app.config['SECRET_KEY'] = 'secret!'
@@ -25,6 +16,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('postgresql://chatroomapp_db_u
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_TYPE'] = 'filesystem' # Store sessions in server's filesystem
 app.config['SESSION_PERMANENT'] = False
+
+db = SQLAlchemy()
+
+class users(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(255), unique=False, nullable=False)
 
 socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initialize SocketIO
 db.init_app(app)
