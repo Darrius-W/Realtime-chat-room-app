@@ -30,7 +30,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initi
 db.init_app(app)
 Session(app)
 #CORS(app, supports_credentials=True)
-CORS(app)
+CORS(app, origins=["https://66f8f309576d5ed0333bb3d7--dw-realtime-chatroom-app.netlify.app/"])
 
 with app.app_context():
     db.create_all()
