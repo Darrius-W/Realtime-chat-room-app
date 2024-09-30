@@ -6,6 +6,7 @@ from flask_session import Session
 from flask_cors import CORS
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
+from datetime import timedelta
 
 
 app = Flask(__name__, static_folder='static') # Initialize flask app
@@ -16,6 +17,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_TYPE'] = 'filesystem' # Store sessions in server's filesystem
 app.config['SESSION_PERMANENT'] = False
+app.permanent_session_lifetime = timedelta(minutes=30)
 
 db = SQLAlchemy()
 
@@ -79,13 +81,14 @@ def login():
     #if user and user.password == (data['userPassword']):
     if user and checkHashPwd(user.password, data['userPassword']):
         session['userName'] = user.name
-        return jsonify({"message": "Logged in successfully"})
+        return jsonify({"message": "Logged in successfully"}), 200
     return jsonify({"message": "Invalid credentials"}), 401
 
 @app.route('/Logout', methods=['POST'])
 def logout():
     session.pop('userName', None)
-    return jsonify({"message": "Logged out successfully"})
+    session.clear()
+    return jsonify({"message": "Logged out successfully"}), 200
 
 @app.route('/Session-check', methods=['GET'])
 def session_check():
