@@ -8,11 +8,11 @@ export default function App(){
   return (
     <Router>
       <Routes>
-        <Route path="https://dw-realtime-chatroom-app.netlify.app/" element={<Login />} />
-        <Route path="https://dw-realtime-chatroom-app.netlify.app/Login" element={<Login />} />
-        <Route path="https://dw-realtime-chatroom-app.netlify.app/Signup" element={<Signup />} />
-        <Route path="https://dw-realtime-chatroom-app.netlify.app/Chatroom" element={<Chatroom />} />
-        <Route path="https://dw-realtime-chatroom-app.netlify.app/Joinroom" element={<Joinroom />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/Chatroom" element={<Chatroom />} />
+        <Route path="/Joinroom" element={<Joinroom />} />
       </Routes>
     </Router>
   );

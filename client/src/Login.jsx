@@ -19,7 +19,7 @@ export default function Login(){
     const handleLogin = async (event) => {
         event.preventDefault()
         try {
-            const response = await axios.post('/Login', { userName, userPassword }, { withCredentials: true });
+            const response = await axios.post('/LoginUser', { userName, userPassword }, { withCredentials: true });
             //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
             setMessage('Logged in successfully');
             //setLoggedInUser(response.data.userName)
