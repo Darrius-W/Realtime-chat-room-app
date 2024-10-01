@@ -97,7 +97,7 @@ function CurrentUser(){
     if (userName !== '' && room !== '') {
       socket.emit('leave', { userName, room });
     }
-    navigate('/Joinroom', { state: userNameData });
+    navigate('https://dw-realtime-chatroom-app.netlify.app/Joinroom', { state: userNameData });
   }
 
   return(
