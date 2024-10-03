@@ -20,7 +20,7 @@ export default function Login(){
         event.preventDefault()
         try {
             alert("here");
-            const response = await axios.post('/LoginUser', { userName, userPassword }, { withCredentials: true });
+            const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, { withCredentials: true });
             //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
             alert("here2");
             if(response.status === 200){

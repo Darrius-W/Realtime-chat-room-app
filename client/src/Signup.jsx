@@ -24,7 +24,7 @@ export default function Signup(){
                 return;
             }
 
-            const response = await fetch('/newUser', {
+            const response = await fetch('https://realtime-chat-room-app.onrender.com/newUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

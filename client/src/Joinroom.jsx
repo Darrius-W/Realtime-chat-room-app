@@ -20,7 +20,7 @@ export default function Joinroom(){
 
     const handleLogout = async () => {
         try{
-            const response = await axios.post('/Logout', {}, { withCredentials: true });
+            const response = await axios.post('https://realtime-chat-room-app.onrender.com/Logout', {}, { withCredentials: true });
             //const response = await axios.post('http://localhost:5000/Logout', {}, { withCredentials: true });
             setMessage('Logged out successfully');
             // Redirect to login page
