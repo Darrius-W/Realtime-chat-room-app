@@ -25,7 +25,7 @@ export default function Login(){
                 .then(response =>
                     alert("here3"),
                     setMessage('Logged in successfully'),
-                    navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: data })
+                    navigate("/Joinroom", { state: data })
                 )
                 .catch(error => alert("ERROrrr: Invalid Credentials"));
             //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
