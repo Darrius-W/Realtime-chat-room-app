@@ -32,7 +32,7 @@ export default function Signup(){
                 body: JSON.stringify(data),
             });
     
-            if (response.ok) {
+            if (response.status === 201) {
                 console.log('User added successfully!');
                 navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: userNameData });
             } else {

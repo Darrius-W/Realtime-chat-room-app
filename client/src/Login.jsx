@@ -21,11 +21,13 @@ export default function Login(){
         try {
             const response = await axios.post('/LoginUser', { userName, userPassword }, { withCredentials: true });
             //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
-            setMessage('Logged in successfully');
-            //setLoggedInUser(response.data.userName)
-            // Redirect to joinroom page
-            const data = { name: userName }
-            navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: data });
+            if(response.status === 200){
+                setMessage('Logged in successfully');
+                //setLoggedInUser(response.data.userName)
+                // Redirect to joinroom page
+                const data = { name: userName }
+                navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: data });
+            }
 
         } catch(error){
             setMessage('Error logging in');
