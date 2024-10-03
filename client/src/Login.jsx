@@ -19,9 +19,12 @@ export default function Login(){
     const handleLogin = async (event) => {
         event.preventDefault()
         try {
+            alert("here");
             const response = await axios.post('/LoginUser', { userName, userPassword }, { withCredentials: true });
             //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
+            alert("here2");
             if(response.status === 200){
+                alert("here3");
                 setMessage('Logged in successfully');
                 //setLoggedInUser(response.data.userName)
                 // Redirect to joinroom page

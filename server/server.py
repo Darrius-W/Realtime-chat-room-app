@@ -75,6 +75,7 @@ def add_user():
 
 @app.route('/LoginUser', methods=['POST'])
 def login():
+    print('HERE I AM--------------------------------------------------------------')
     data = request.get_json()
     
     user = users.query.filter_by(name=data['userName']).first()
