@@ -22,11 +22,11 @@ export default function Login(){
         try {
             alert("here");
             const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, { withCredentials: true })
-                .then(response =>
-                    alert("here3"),
-                    setMessage('Logged in successfully'),
-                    navigate("/Joinroom", { state: data })
-                )
+                .then(response => {
+                    alert("here3");
+                    setMessage('Logged in successfully');
+                    navigate("/Joinroom", { state: data });
+                })
                 .catch(error => alert("ERROrrr: Invalid Credentials"));
             //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
             alert("here2");
