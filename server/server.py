@@ -82,9 +82,11 @@ def login():
     data = request.get_json()
     
     user = users.query.filter_by(name=data['userName']).first()
+    print('Current user is --------> ', data['userName'])
     #if user and user.password == (data['userPassword']):
     if user and checkHashPwd(user.password, data['userPassword']):
         session['userName'] = user.name
+        print('-----Final point-------')
         return (jsonify({"message": "Logged in successfully"}), 200).headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     return jsonify({"message": "Invalid credentials"}), 401
 
