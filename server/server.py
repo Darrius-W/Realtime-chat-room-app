@@ -156,4 +156,4 @@ def updateMembers(room):
     
 
 if __name__ == '__main__':
-    socketio.run(app, debug=False, host='https://dw-realtime-chatroom-app.netlify.app/')
+    socketio.run(app)#, debug=False, host='https://dw-realtime-chatroom-app.netlify.app/')
