@@ -24,7 +24,7 @@ export default function Joinroom(){
             //const response = await axios.post('http://localhost:5000/Logout', {}, { withCredentials: true });
             setMessage('Logged out successfully');
             // Redirect to login page
-            navigate("https://dw-realtime-chatroom-app.netlify.app/Login");
+            navigate("/Login");
             //setLoggedInUser(null);
         } catch(error){
             setMessage('Error logging out');
@@ -37,7 +37,7 @@ export default function Joinroom(){
           socket.emit('join', { userName, room });
         }*/
         const data = { name: userName, room: room}
-        navigate("https://dw-realtime-chatroom-app.netlify.app/Chatroom", { state: data });
+        navigate("/Chatroom", { state: data });
       };
     /*const handleJoinRoom = async () => {
         try {
