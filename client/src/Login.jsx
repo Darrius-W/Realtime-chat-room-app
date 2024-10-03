@@ -17,29 +17,27 @@ export default function Login(){
 
 
     const handleLogin = async (event) => {
+        const data = { name: userName }
         event.preventDefault()
         try {
             alert("here");
             const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, { withCredentials: true })
-                .then(response => {
-                    alert("here3");
-                    setMessage('Logged in successfully');
-                    //setLoggedInUser(response.data.userName)
-                    // Redirect to joinroom page
-                    const data = { name: userName };
-                    navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: data });
-                })
+                .then(response =>
+                    alert("here3"),
+                    setMessage('Logged in successfully'),
+                    navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: data })
+                )
                 .catch(error => alert("ERROrrr: Invalid Credentials"));
             //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
             alert("here2");
-            if(response.status === 200){
+            /*if(response.status === 200){
                 alert("here3");
                 setMessage('Logged in successfully');
                 //setLoggedInUser(response.data.userName)
                 // Redirect to joinroom page
                 const data = { name: userName }
                 navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: data });
-            }
+            }*/
 
         } catch(error){
             setMessage('Error logging in');
