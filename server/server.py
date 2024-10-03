@@ -86,7 +86,7 @@ def login():
     if user and checkHashPwd(user.password, data['userPassword']):
         session['userName'] = user.name
         return jsonify({"message": "Logged in successfully"}), 200
-    return jsonify({"message": "Invalid credentials"}), 401
+    return (jsonify({"message": "Invalid credentials"}), 401).headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
 
 @app.route('/Logout', methods=['POST'])
 def logout():
