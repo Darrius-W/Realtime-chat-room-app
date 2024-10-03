@@ -76,7 +76,7 @@ def add_user():
         db.session.commit()
         return jsonify({'message': 'User added successfully!'}), 201
 
-@app.route('/LoginUser', methods=['POST'])
+@app.route('/LoginUser', methods=['POST', 'OPTIONS'])
 def login():
     print('HERE I AM--------------------------------------------------------------')
     data = request.get_json()
