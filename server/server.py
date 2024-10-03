@@ -80,9 +80,9 @@ def add_user():
 def login():
     print('HERE I AM--------------------------------------------------------------')
     data = request.get_json()
-    
-    user = users.query.filter_by(name=data['userName']).first()
     print('Current user is --------> ', data['userName'])
+    user = users.query.filter_by(name=data['userName']).first()
+    print('2Current user is --------> ', data['userName'])
     #if user and user.password == (data['userPassword']):
     if user and checkHashPwd(user.password, data['userPassword']):
         session['userName'] = user.name
