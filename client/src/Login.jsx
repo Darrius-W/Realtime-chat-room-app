@@ -31,7 +31,7 @@ export default function Login(){
             if(response.status === 200){
                 // Redirect to joinroom page
                 const data = { name: userName }
-                navigate("https://dw-realtime-chatroom-app.netlify.app/Joinroom", { state: data });
+                navigate("/Joinroom", { state: data });
             }
             else{
                 alert("ERRORR: Invalid Credentials");
