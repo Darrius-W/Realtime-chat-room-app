@@ -35,7 +35,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initi
 db.init_app(app)
 Session(app)
 #CORS(app, supports_credentials=True)
-CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://dw-realtime-chatroom-app.netlify.app/"}})
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://dw-realtime-chatroom-app.netlify.app"}})
 
 with app.app_context():
     db.create_all()
@@ -76,7 +76,7 @@ def add_user():
         db.session.commit()
         return jsonify({'message': 'User added successfully!'}), 201
 
-@app.route('/LoginUser', methods=['POST', 'OPTIONS'])
+@app.route('/LoginUser', methods=['POST', 'GET'])
 def login():
     print('HERE I AM--------------------------------------------------------------')
     data = request.get_json()
@@ -90,7 +90,7 @@ def login():
         return jsonify({"message": "Logged in successfully"}), 200
     return jsonify({"message": "Invalid credentials"}), 401
 
-@app.route('/Logout', methods=['POST'])
+@app.route('/Logout', methods=['POST', 'GET'])
 def logout():
     session.pop('userName', None)
     session.clear()
@@ -161,4 +161,4 @@ def updateMembers(room):
     
 
 if __name__ == '__main__':
-    socketio.run(app)#, debug=False, host='https://dw-realtime-chatroom-app.netlify.app/')
+    socketio.run(app, host="https://dw-realtime-chatroom-app.netlify.app")#, debug=False, host='https://dw-realtime-chatroom-app.netlify.app/')
