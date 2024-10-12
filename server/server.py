@@ -81,6 +81,9 @@ def login():
     data = request.get_json()
     user = users.query.filter_by(name=data['userName']).first()
     
+    if request.method == 'OPTIONS':
+        return '', 200
+    
     #if user and user.password == (data['userPassword']):
     if user and checkHashPwd(user.password, data['userPassword']):
         session['userName'] = user.name
