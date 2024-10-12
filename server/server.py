@@ -76,13 +76,10 @@ def add_user():
         db.session.commit()
         return jsonify({'message': 'User added successfully!'}), 201
 
-@app.route('/LoginUser', methods=['POST', 'GET', 'OPTIONS'])
+@app.route('/LoginUser', methods=['POST', 'GET'])
 def login():
     data = request.get_json()
     user = users.query.filter_by(name=data['userName']).first()
-    
-    if request.method == 'OPTIONS':
-        return '', 200
     
     #if user and user.password == (data['userPassword']):
     if user and checkHashPwd(user.password, data['userPassword']):
