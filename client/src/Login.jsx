@@ -18,8 +18,9 @@ export default function Login(){
 
     const handleLogin = async (event) => {
         event.preventDefault()
+        const data = { userName, userPassword }
         try {
-            const response = await fetch('https://realtime-chat-room-app.onrender.com/LoginUser', {userName, userPassword}, {withCredentials: true}, {
+            const response = await fetch('https://realtime-chat-room-app.onrender.com/LoginUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
