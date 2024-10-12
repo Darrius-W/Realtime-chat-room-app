@@ -18,7 +18,6 @@ export default function Login(){
 
     const handleLogin = async (event) => {
         event.preventDefault()
-        const data = { userName, userPassword }
         try {
             const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, { withCredentials: true })
                 /*.then(response => {
