@@ -35,7 +35,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initi
 db.init_app(app)
 Session(app)
 #CORS(app, supports_credentials=True)
-CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://dw-realtime-chatroom-app.netlify.app"}})
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://dw-realtime-chatroom-app.netlify.app", "methods": "POST", "allow_headers": "Content-Type,Authorization"}})
 
 with app.app_context():
     db.create_all()
