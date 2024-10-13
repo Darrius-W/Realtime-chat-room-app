@@ -83,9 +83,9 @@ def login():
     
     if request.method == 'OPTIONS':
         response = make_response('', 200)
-        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Origin'] = 'https://dw-realtime-chatroom-app.netlify.app'
         response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
         return response
     
     #if user and user.password == (data['userPassword']):
