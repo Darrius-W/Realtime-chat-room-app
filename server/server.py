@@ -67,6 +67,14 @@ def handleMessage(data):
 @app.route('/newUser', methods=['POST', 'GET'])
 def add_user():
     data = request.get_json()
+    
+    if request.method == 'OPTIONS':
+        response = make_response('', 200)
+        response.headers['Access-Control-Allow-Origin'] = 'https://dw-realtime-chatroom-app.netlify.app'
+        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
+        return response
+    
     # If user already exists
     if (users.query.filter_by(name=data['userName']).first()):
         return jsonify({"message": "ERROR: Username Taken"}), 401
@@ -83,7 +91,7 @@ def login():
     
     if request.method == 'OPTIONS':
         response = make_response('', 200)
-        response.headers['Access-Control-Allow-Origin'] = 'https://dw-realtime-chatroom-app.netlify.app/LoginUser'
+        response.headers['Access-Control-Allow-Origin'] = 'https://dw-realtime-chatroom-app.netlify.app'
         response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
         return response
