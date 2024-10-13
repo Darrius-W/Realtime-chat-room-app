@@ -31,7 +31,7 @@ class users(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False)
 
-socketio = SocketIO(app, manage_session=False) # Initialize SocketIO
+socketio = SocketIO(app, cors_allowed_origins="https://dw-realtime-chatroom-app.netlify.app", manage_session=False) # Initialize SocketIO
 db.init_app(app)
 Session(app)
 #CORS(app, supports_credentials=True)
