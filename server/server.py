@@ -49,13 +49,11 @@ def serve_react_app():
 
 # Hash the password
 def hashPwd(password):
-    #return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    return bcrypt.generate_password_hash(password).decode('utf-8')
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 # Check password hash
 def checkHashPwd(storedPwd, currPwd):
-    #return bcrypt.checkpw(currPwd, storedPwd.decode('utf-8'))
-    return bcrypt.check_password_hash(storedPwd, currPwd)
+    return bcrypt.checkpw(storedPwd, currPwd.encode('utf-8'))
 
 # Catch client layer's emitted message
 @socketio.on("message")
