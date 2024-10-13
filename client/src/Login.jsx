@@ -27,7 +27,7 @@ export default function Login(){
                 },
                 body: JSON.stringify(uData),
             });*/
-            const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true })
+            const response = await axios.get('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true })
                 /*.then(response => {
                     alert("here3");
                     setMessage('Logged in successfully');
