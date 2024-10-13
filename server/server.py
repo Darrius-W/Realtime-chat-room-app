@@ -1,7 +1,7 @@
 import eventlet
 eventlet.monkey_patch()
 
-from flask import Flask, session, request, jsonify, redirect, url_for, send_from_directory
+from flask import Flask, session, request, jsonify, redirect, url_for, send_from_directory, make_response
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_session import Session
 #from models import users
@@ -82,7 +82,11 @@ def login():
     user = users.query.filter_by(name=data['userName']).first()
     
     if request.method == 'OPTIONS':
-        return '', 200
+        response = make_response('', 200)
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        return response
     
     #if user and user.password == (data['userPassword']):
     if user and checkHashPwd(user.password, data['userPassword']):
