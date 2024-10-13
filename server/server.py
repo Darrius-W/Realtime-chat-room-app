@@ -31,7 +31,7 @@ class users(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False)
 
-socketio = SocketIO(app, cors_allowed_origins="https://dw-realtime-chatroom-app.netlify.app", manage_session=False) # Initialize SocketIO
+socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initialize SocketIO
 db.init_app(app)
 Session(app)
 #CORS(app, supports_credentials=True)
@@ -64,7 +64,7 @@ def handleMessage(data):
     emit("received_message", {'message': f'{username}: {message}'}, room=room) # Pass user msg to all clients
     #emit("received_message", {'message': message}, room=room)
 
-@app.route('/newUser', methods=['POST', 'GET', 'OPTIONS'])
+@app.route('/newUser', methods=['POST', 'GET'])
 def add_user():
     data = request.get_json()
     
