@@ -79,13 +79,12 @@ def add_user():
 
 @app.route('/LoginUser', methods=['POST', 'GET'])
 def login():
-    print("here")
     data = request.get_json()
     user = users.query.filter_by(name=data['userName']).first()
     
     #if user and user.password == (data['userPassword']):
-    if user and checkHashPwd(user.password, data['userPassword']):
-        session['userName'] = user.name
+    if user:#and checkHashPwd(user.password, data['userPassword']):
+        #session['userName'] = user.name
         return jsonify({"message": "Logged in successfully"}), 200
     else:
         return jsonify({"message": "Invalid credentials"}), 401
