@@ -49,11 +49,13 @@ def serve_react_app():
 
 # Hash the password
 def hashPwd(password):
-    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    #return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    return bcrypt.generate_password_hash(password).decode('utf-8')
 
 # Check password hash
 def checkHashPwd(storedPwd, currPwd):
-    return bcrypt.checkpw(currPwd.encode('utf-8'), storedPwd)
+    #return bcrypt.checkpw(currPwd.encode('utf-8'), storedPwd)
+    return bcrypt.check_password_hash(storedPwd, currPwd)
 
 # Catch client layer's emitted message
 @socketio.on("message")
@@ -83,7 +85,7 @@ def login():
     user = users.query.filter_by(name=data['userName']).first()
     
     #if user and user.password == (data['userPassword']):
-    if user and checkHashPwd(data['userPassword'], data['userPassword']):#user.password, data['userPassword']):
+    if user and checkHashPwd(user.password, data['userPassword']):
         session['userName'] = user.name
         return jsonify({"message": "Logged in successfully"}), 200
     else:
