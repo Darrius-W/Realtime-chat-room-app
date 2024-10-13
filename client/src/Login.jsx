@@ -19,15 +19,15 @@ export default function Login(){
     const handleLogin = async (event) => {
         event.preventDefault()
         try {
-            const uData = { userName, userPassword };
+            /*const uData = { userName, userPassword };
             const response = await fetch('https://realtime-chat-room-app.onrender.com/LoginUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(uData),
-            });
-            //const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, {headers: {'Content-Type': 'application/json'}}, { withCredentials: true })
+            });*/
+            const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true })
                 /*.then(response => {
                     alert("here3");
                     setMessage('Logged in successfully');
