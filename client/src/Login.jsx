@@ -14,6 +14,7 @@ export default function Login(){
     const [message, setMessage] = useState('')
     //const [loggedInUser, setLoggedInUser] = useState(null);
     const navigate = useNavigate();
+    const data = { name: userName }
 
 
     const handleLogin = async (event) => {
@@ -38,8 +39,7 @@ export default function Login(){
             //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
             if(response.status === 200){
                 // Redirect to joinroom page
-                const data = { name: userName }
-                navigate("/Joinroom", { state: data });
+                navigate("/Joinroom", { state: userName });
             }
             else{
                 alert("ERRORR: Invalid Credentials");
