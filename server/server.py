@@ -31,7 +31,7 @@ class users(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False)
 
-socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initialize SocketIO
+socketio = SocketIO(app, manage_session=False) # Initialize SocketIO
 db.init_app(app)
 Session(app)
 #CORS(app, supports_credentials=True)
@@ -68,13 +68,6 @@ def handleMessage(data):
 def add_user():
     data = request.get_json()
     
-    if request.method == 'OPTIONS':
-        response = make_response('', 200)
-        response.headers['Access-Control-Allow-Origin'] = 'https://dw-realtime-chatroom-app.netlify.app'
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
-        return response
-    
     # If user already exists
     if (users.query.filter_by(name=data['userName']).first()):
         return jsonify({"message": "ERROR: Username Taken"}), 401
@@ -88,13 +81,6 @@ def add_user():
 def login():
     data = request.get_json()
     user = users.query.filter_by(name=data['userName']).first()
-    
-    if request.method == 'OPTIONS':
-        response = make_response('', 200)
-        response.headers['Access-Control-Allow-Origin'] = 'https://dw-realtime-chatroom-app.netlify.app'
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-        response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
-        return response
     
     #if user and user.password == (data['userPassword']):
     if user and checkHashPwd(user.password, data['userPassword']):
