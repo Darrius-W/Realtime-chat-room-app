@@ -83,7 +83,7 @@ def login():
     user = users.query.filter_by(name=data['userName']).first()
     
     #if user and user.password == (data['userPassword']):
-    if user:# and checkHashPwd(user.password, data['userPassword']):
+    if user: and checkHashPwd(data['userPassword'], data['userPassword']):#user.password, data['userPassword']):
         session['userName'] = user.name
         return jsonify({"message": "Logged in successfully"}), 200
     else:
