@@ -49,13 +49,11 @@ def serve_react_app():
 
 # Hash the password
 def hashPwd(password):
-    #return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    return bcrypt.generate_password_hash(password).decode('utf-8')
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 # Check password hash
 def checkHashPwd(storedPwd, currPwd):
-    #return bcrypt.checkpw(currPwd.encode('utf-8'), storedPwd)
-    return bcrypt.check_password_hash(storedPwd, currPwd)
+    return bcrypt.checkpw(currPwd.encode('utf-8'), storedPwd)
 
 # Catch client layer's emitted message
 @socketio.on("message")
@@ -74,7 +72,7 @@ def add_user():
     if (users.query.filter_by(name=data['userName']).first()):
         return jsonify({"message": "ERROR: Username Taken"}), 401
     else:
-        new_user = users(name=data['userName'], email=data['userEmail'], password=hashPwd(data['userPassword']))
+        new_user = users(name=data['userName'], email=data['userEmail'], password=data['userPassword'])#hashPwd(data['userPassword']))
         db.session.add(new_user)
         db.session.commit()
         return jsonify({'message': 'User added successfully!'}), 201
@@ -85,7 +83,7 @@ def login():
     user = users.query.filter_by(name=data['userName']).first()
     
     #if user and user.password == (data['userPassword']):
-    if user and checkHashPwd(user.password, data['userPassword']):
+    if user and (user.password, data['userPassword']):#checkHashPwd(user.password, data['userPassword']):
         session['userName'] = user.name
         return jsonify({"message": "Logged in successfully"}), 200
     else:
