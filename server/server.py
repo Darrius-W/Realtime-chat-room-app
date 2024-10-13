@@ -53,7 +53,7 @@ def hashPwd(password):
 
 # Check password hash
 def checkHashPwd(storedPwd, currPwd):
-    return bcrypt.checkpw(storedPwd, currPwd.encode('utf-8'))
+    return bcrypt.checkpw(currPwd.encode('utf-8'), storedPwd)
 
 # Catch client layer's emitted message
 @socketio.on("message")
