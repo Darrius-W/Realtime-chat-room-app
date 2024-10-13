@@ -35,7 +35,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initi
 db.init_app(app)
 Session(app)
 #CORS(app, supports_credentials=True)
-CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://dw-realtime-chatroom-app.netlify.app", "methods": "POST", "allow_headers": "Content-Type,Authorization"}})
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://dw-realtime-chatroom-app.netlify.app"}})
 
 with app.app_context():
     db.create_all()
@@ -64,14 +64,14 @@ def handleMessage(data):
     emit("received_message", {'message': f'{username}: {message}'}, room=room) # Pass user msg to all clients
     #emit("received_message", {'message': message}, room=room)
 
-@app.route('/newUser', methods=['POST', 'GET'])
+@app.route('/newUser', methods=['POST', 'GET', 'OPTIONS'])
 def add_user():
     data = request.get_json()
     
     if request.method == 'OPTIONS':
         response = make_response('', 200)
         response.headers['Access-Control-Allow-Origin'] = 'https://dw-realtime-chatroom-app.netlify.app'
-        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
         return response
     
@@ -92,7 +92,7 @@ def login():
     if request.method == 'OPTIONS':
         response = make_response('', 200)
         response.headers['Access-Control-Allow-Origin'] = 'https://dw-realtime-chatroom-app.netlify.app'
-        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
         return response
     
