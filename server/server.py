@@ -72,7 +72,7 @@ def add_user():
     if (users.query.filter_by(name=data['userName']).first()):
         return jsonify({"message": "ERROR: Username Taken"}), 401
     else:
-        new_user = users(name=data['userName'], email=data['userEmail'], password=bcrypt.hashpw(data['userPassword'].encode('utf-8'), bcrypt.gensalt())):#hashPwd(data['userPassword']))
+        new_user = users(name=data['userName'], email=data['userEmail'], password=bcrypt.hashpw(data['userPassword'].encode('utf-8'), bcrypt.gensalt()))#hashPwd(data['userPassword']))
         db.session.add(new_user)
         db.session.commit()
         return jsonify({'message': 'User added successfully!'}), 201
