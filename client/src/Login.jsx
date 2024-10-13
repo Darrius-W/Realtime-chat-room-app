@@ -39,7 +39,7 @@ export default function Login(){
             //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
             if(response.status === 200){
                 // Redirect to joinroom page
-                navigate("/Joinroom", { state: userName });
+                navigate("/Joinroom", { state: data });
             }
             else{
                 alert("ERRORR: Invalid Credentials");
