@@ -7,7 +7,7 @@ from flask_session import Session
 #from models import users
 #from db import db
 from flask_cors import CORS
-from flask_bcrypt import Bcrypt
+import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
 
