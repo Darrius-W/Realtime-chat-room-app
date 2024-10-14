@@ -69,8 +69,6 @@ def handleMessage(data):
 def add_user():
     data = request.get_json()
     
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    
     # If user already exists
     if (users.query.filter_by(name=data['userName']).first()):
         return jsonify({"message": "ERROR: Username Taken"}), 401
