@@ -35,7 +35,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initi
 db.init_app(app)
 Session(app)
 #CORS(app, supports_credentials=True)
-bcrypt = Bcrypt(app)
+bCrypt = bcrypt(app)
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://dw-realtime-chatroom-app.netlify.app"}})
 
 with app.app_context():
@@ -73,7 +73,7 @@ def add_user():
     if (users.query.filter_by(name=data['userName']).first()):
         return jsonify({"message": "ERROR: Username Taken"}), 401
     else:
-        new_user = users(name=data['userName'], email=data['userEmail'], password=bcrypt.hashpw(data['userPassword'].encode('utf-8'), bcrypt.gensalt()))#hashPwd(data['userPassword']))
+        new_user = users(name=data['userName'], email=data['userEmail'], password=bCrypt.hashpw(data['userPassword'].encode('utf-8'), bCrypt.gensalt()))#hashPwd(data['userPassword']))
         db.session.add(new_user)
         db.session.commit()
         return jsonify({'message': 'User added successfully!'}), 201
@@ -84,7 +84,7 @@ def login():
     user = users.query.filter_by(name=data['userName']).first()
     
     #if user and user.password == (data['userPassword']):
-    if user and (bcrypt.checkpw(data['userPassword'].encode('utf-8'), user.password)):#checkHashPwd(user.password, data['userPassword']):
+    if user and (bCrypt.checkpw(data['userPassword'].encode('utf-8'), user.password)):#checkHashPwd(user.password, data['userPassword']):
         session['userName'] = user.name
         return jsonify({"message": "Logged in successfully"}), 200
     else:
