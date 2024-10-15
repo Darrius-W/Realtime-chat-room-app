@@ -13,7 +13,6 @@ code {
 }
 
 #root{
-  /*background-color: blue;*/
   height: 100vh;
   background: linear-gradient(#30142b, #a12727);
   overflow: hidden;

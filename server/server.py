@@ -4,8 +4,6 @@ eventlet.monkey_patch()
 from flask import Flask, session, request, jsonify, redirect, url_for, send_from_directory, make_response
 from flask_socketio import SocketIO, join_room, leave_room, send, emit
 from flask_session import Session
-#from models import users
-#from db import db
 from flask_cors import CORS
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
@@ -14,7 +12,6 @@ from datetime import timedelta
 
 app = Flask(__name__, static_folder='static') # Initialize flask app
 app.config['SECRET_KEY'] = 'secret!'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 SQLALCHEMY_DATABASE_URL = "postgresql://chatroomapp_db_user:WMLMQVyUxXQCLyijRbHvFvPGTR6k5pCU@dpg-crscqrjtq21c73de7bd0-a.oregon-postgres.render.com/chatroomapp_db"
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -34,7 +31,6 @@ class users(db.Model):
 socketio = SocketIO(app, cors_allowed_origins="*", manage_session=False) # Initialize SocketIO
 db.init_app(app)
 Session(app)
-#CORS(app, supports_credentials=True)
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://dw-realtime-chatroom-app.netlify.app"}})
 
 with app.app_context():
@@ -62,7 +58,6 @@ def handleMessage(data):
     message = data['value']
     username = data['userName']
     emit("received_message", {'message': f'{username}: {message}'}, room=room) # Pass user msg to all clients
-    #emit("received_message", {'message': message}, room=room)
 
 @app.route('/newUser', methods=['POST', 'GET'])
 def add_user():
@@ -82,7 +77,6 @@ def login():
     data = request.get_json()
     user = users.query.filter_by(name=data['userName']).first()
     
-    #if user and user.password == (data['userPassword']):
     if user and (data['userPassword'] == user.password):#(bcrypt.checkpw(data['userPassword'].encode('utf-8'), user.password)):#checkHashPwd(user.password, data['userPassword']):
         session['userName'] = user.name
         return jsonify({"message": "Logged in successfully"}), 200

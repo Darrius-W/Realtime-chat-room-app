@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './App.css'
 
-//const socket = io.connect('http://localhost:5000');
 
 export default function Joinroom(){
 
@@ -21,11 +20,9 @@ export default function Joinroom(){
     const handleLogout = async () => {
         try{
             const response = await axios.post('https://realtime-chat-room-app.onrender.com/Logout', {}, { withCredentials: true });
-            //const response = await axios.post('http://localhost:5000/Logout', {}, { withCredentials: true });
             setMessage('Logged out successfully');
             // Redirect to login page
             navigate("/Login");
-            //setLoggedInUser(null);
         } catch(error){
             setMessage('Error logging out');
         }
@@ -33,28 +30,10 @@ export default function Joinroom(){
 
 
     const handleJoinRoom = () => {
-        /*if (userName !== '' && room !== '') {
-          socket.emit('join', { userName, room });
-        }*/
+
         const data = { name: userName, room: room}
         navigate("/Chatroom", { state: data });
       };
-    /*const handleJoinRoom = async () => {
-        try {
-            if (room !== ''){
-                socket.emit('join', {userName, room })
-            
-                const response = await axios.post('http://localhost:5000/join_room_route', { room }, { withCredentials: true });
-                setMessage('Joined room successfully');
-                setCurrRoom(response.data.room)
-                // Redirect to Chatroom page
-                navigate("/Chatroom");
-            }
-
-        } catch(error){
-            setMessage('Error joining room');
-        }
-    }*/
 
     return(
         <Form onSubmit={ handleJoinRoom }>

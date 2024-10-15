@@ -1,4 +1,3 @@
-//import "./Chatroom.css"
 import { useState, useEffect, useRef } from "react"
 import io from "socket.io-client"
 import { useLocation, useNavigate } from "react-router-dom"
@@ -25,16 +24,6 @@ export default function Chatroom(){
   const navigate = useNavigate();
   const userNameData = { name: userName }
 
-  /*useEffect(() => {
-    fetch('/Room-check')
-        .then(response => response.json())
-        .then(roomData => setRoom(roomData));
-
-    fetch('/Session-check')
-    .then(response => response.json())
-    .then(nameData => setUserName(nameData));
-  
-  }, []);*/
   
   const joinRoom = () => {
     if (userName !== '' && room !== '') {
@@ -43,13 +32,6 @@ export default function Chatroom(){
   }
 
   joinRoom();
-
-  /*const leaveRoom = () => {
-    if (userName !== '' && room !== '') {
-      socket.emit('leave', { userName, room });
-    }
-    navigate('/Joinroom', { state: userNameData });
-  }*/
 
 
   return(
@@ -62,15 +44,12 @@ export default function Chatroom(){
           </Container>
         </Col>
         <Col md={7}>
-          <Container className="chatroom-grid chat-container"/*style={{width: '100vw'}}*/>
+          <Container className="chatroom-grid chat-container">
             <Row>
               <Col>
                 {/* Current Chat User */}
                 <CurrentUser />
               </Col>
-              {/*<Col>
-                <Button className="bg-danger back-btn" id="leaveBtn" onClick={ leaveRoom }>Leave Room</Button>
-              </Col>*/}
             </Row>
             <Row>
               {/* Display Window */}
@@ -123,16 +102,8 @@ function ChatWindow(){
   const [room, setRoom] = useState(data.room);
 
   useEffect(() => {
-    /*fetch('/Room-check')
-        .then(response => response.json())
-        .then(roomData => setRoom(roomData));
-
-    fetch('/Session-check')
-    .then(response => response.json())
-    .then(nameData => setUserName(nameData));*/
 
     socket.on("received_message", (data) => { // catch server response
-      //setMessages([...messages, "User [Time/Date]: " + data.message]); // store new msg in msgs array
       setMessages((prevMessages) => [...prevMessages, data.message]);
     });
     
@@ -140,13 +111,6 @@ function ChatWindow(){
       socket.off('received_message');
     };
   }, []);
-  
-  /*const joinRoom = () => {
-    if (userName !== '' && room !== '') {
-      socket.emit('join', { userName, room });
-    }
-  };*/
-
   
 
   // Keeps display at most recent messages
@@ -171,24 +135,7 @@ function ChatWindow(){
       setValue('');
     }
     event.target.reset() // clear input field
-    /*
-    event.preventDefault(); // prevent page refresh
-    setValue(event.target.value) // grab user's submitted message
-    socket.emit("message", {value, room}) // pass user msg to server layer
-    event.target.reset() // clear input field
-    */
   }
-  
-
-  // Store current message in message array for easy display
-  /*useEffect(() => {
-    socket.on("received_message", (data) => { // catch server response
-      alert("here")
-      setMessages([...messages, "User [Time/Date]: " + data.message]); // store new msg in msgs array
-      //setMessages((...messages) => [...messages, data.message]);
-      //alert(data) // Message gets printed multiple times
-    })
-  })*/
 
  
   return(
@@ -252,16 +199,6 @@ function ChatMembers(){
           ))}
         </ul>
       </Card.Body>
-
-
-      {/*<div className="memberDisp">
-        <h2>Member List</h2>
-        <ul>
-          <li>Gary</li>
-          <li>John</li>
-          <li>Tyler</li>
-        </ul>
-      </div>*/}
     </Card>
   );
 }

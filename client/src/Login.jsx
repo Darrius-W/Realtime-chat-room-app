@@ -12,7 +12,6 @@ export default function Login(){
     const [userName, setUserName] = useState('');
     const [userPassword, setPassword] = useState('');
     const [message, setMessage] = useState('')
-    //const [loggedInUser, setLoggedInUser] = useState(null);
     const navigate = useNavigate();
     const data = { name: userName }
 
@@ -20,23 +19,8 @@ export default function Login(){
     const handleLogin = async (event) => {
         event.preventDefault()
         try {
-            /*const uData = { userName, userPassword };
-            const response = await fetch('https://realtime-chat-room-app.onrender.com/LoginUser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(uData),
-            });*/
             const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true })
-                /*.then(response => {
-                    alert("here3");
-                    setMessage('Logged in successfully');
-                    navigate("/Joinroom", { state: data });
-                })
-                .catch(error => alert("ERROrrr: Invalid Credentials"));*/
-
-            //const response = await axios.post('http://localhost:5000/Login', { userName, userPassword }, { withCredentials: true });
+            
             if(response.status === 200){
                 // Redirect to joinroom page
                 navigate("/Joinroom", { state: data });
