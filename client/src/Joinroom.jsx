@@ -32,7 +32,8 @@ export default function Joinroom(){
 
     const handleJoinRoom = () => {
         // Redirect user to requested room
-        navigate("/Chatroom", { state: { name: userName, room: room} });
+        const data = { name: userName, room: room}
+        navigate("/Chatroom", { state: data });
       };
 
     return(
