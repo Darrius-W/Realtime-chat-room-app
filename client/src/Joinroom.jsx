@@ -12,14 +12,13 @@ export default function Joinroom(){
     const navigate = useNavigate();
     const location = useLocation();
     const data = location.state;
-    const [userName, setUserName] = useState(data.name);
+    const userName = data.name
     const [room, setRoom] = useState('');
 
 
     const handleLogout = async () => {
         try{ // Logout: Successful
             const response = await axios.get('https://realtime-chat-room-app.onrender.com/Logout')
-            //const response = await axios.post('https://realtime-chat-room-app.onrender.com/Logout', {}, { withCredentials: true });
             // Redirect to login page
             if (response.status == 200){
                 navigate("/Login");
@@ -32,8 +31,7 @@ export default function Joinroom(){
 
     const handleJoinRoom = () => {
         // Redirect user to requested room
-        const data = { name: userName, room: room}
-        navigate("/Chatroom", { state: data });
+        navigate("/Chatroom", { state: { name: userName, room: room} });
       };
 
     return(
