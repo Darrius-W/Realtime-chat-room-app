@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -11,28 +11,26 @@ export default function Login(){
 
     const [userName, setUserName] = useState('');
     const [userPassword, setPassword] = useState('');
-    const [message, setMessage] = useState('')
     const navigate = useNavigate();
-    const data = { name: userName }
 
 
     const handleLogin = async (event) => {
-        event.preventDefault()
+        event.preventDefault() // Prevents refresh so link can redirect user
         try {
+            // Send request to server to authenticate user given user entered credentials
             const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true })
             
-            if(response.status === 200){
-                // Redirect to joinroom page
-                navigate("/Joinroom", { state: data });
+            if(response.status === 200){ // Login: Successful
+                // Redirect user to joinroom page
+                alert("Login Successful")
+                navigate("/Joinroom", { state: {name: userName} });
             }
-            else{
-                alert("ERRORR: Invalid Credentials");
-                alert(response.status)
+            else{ // Login: Failed
+                alert("ERROR: Invalid user credentials");
             }
 
-        } catch(error){
-            setMessage('Error logging in');
-            alert("ERROR: Invalid Credentials");
+        } catch(error){ // Server Error
+            alert("ERROR: Connection to server failed");
         }
     };
 

@@ -10,8 +10,8 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import "./App.css"
 
-// Establishing Socket IO connection with desired port
-const endpoint = "https://realtime-chat-room-app.onrender.com"; //"http://localhost:5000";
+// Establishing Socket IO connection with desired endpoint
+const endpoint = "https://realtime-chat-room-app.onrender.com";
 const socket = io.connect(`${endpoint}`);
 
 
