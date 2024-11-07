@@ -12,7 +12,7 @@ export default function Joinroom(){
     const navigate = useNavigate();
     const location = useLocation();
     const data = location.state;
-    const userName = useState(data.name);//const [userName, setUserName] = useState(data.name);
+    const [userName, setUserName] = useState(data.name);
     const [room, setRoom] = useState('');
 
 
