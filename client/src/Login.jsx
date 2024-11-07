@@ -27,7 +27,6 @@ export default function Login(){
             }
 
         } catch(error){ // Login: Failed
-            console.error('Error:', error);
             alert("ERROR: Invalid user credentials");
         }
     };

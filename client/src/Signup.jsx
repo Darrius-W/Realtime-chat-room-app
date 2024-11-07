@@ -16,25 +16,16 @@ export default function Signup(){
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent refresh so that user may be redirected
-        //const data = { userName, userEmail, userPassword };
-        //const userNameData = { name: userName }
     
         try {
             // Check if passwords match
             if (userPassword !== confirmPwd){
-                alert("ERROR: Passwords Do Not Match");
+                alert("ERROR: Passwords do not match");
                 return;
             }
 
             // Send request to server to create a new user
             const response = await axios.post('https://realtime-chat-room-app.onrender.com/newUser', { userName, userEmail, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true })
-            /*const response = await fetch('https://realtime-chat-room-app.onrender.com/newUser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });*/
     
             if (response.status === 201) { // Signup: Successful
                 // Redirect user to joinroom page
@@ -43,7 +34,6 @@ export default function Signup(){
             }
 
         } catch (error) { // Signup: Failed
-            console.error('Error:', error);
             alert("ERROR: Username taken");
         }
     };
