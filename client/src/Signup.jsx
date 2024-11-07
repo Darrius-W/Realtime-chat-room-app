@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Stack from 'react-bootstrap/Stack';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -14,33 +15,36 @@ export default function Signup(){
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        const data = { userName, userEmail, userPassword };
-        const userNameData = { name: userName }
+        event.preventDefault(); // Prevent refresh so that user may be redirected
+        //const data = { userName, userEmail, userPassword };
+        //const userNameData = { name: userName }
     
         try {
+            // Check if passwords match
             if (userPassword !== confirmPwd){
                 alert("ERROR: Passwords Do Not Match");
                 return;
             }
 
-            const response = await fetch('https://realtime-chat-room-app.onrender.com/newUser', {
+            // Send request to server to create a new user
+            const response = await axios.post('https://realtime-chat-room-app.onrender.com/newUser', { userName, userEmail, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true })
+            /*const response = await fetch('https://realtime-chat-room-app.onrender.com/newUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
-            });
+            });*/
     
-            if (response.status === 201) {
-                console.log('User added successfully!');
-                navigate("/Joinroom", { state: userNameData });
-            } else {
-                console.error('Error adding user.');
-                alert("ERROR: Username Taken");
+            if (response.status === 201) { // Signup: Successful
+                // Redirect user to joinroom page
+                alert('Account creation successful');
+                navigate("/Joinroom", { state: { name: userName } });
             }
-        } catch (error) {
+
+        } catch (error) { // Signup: Failed
             console.error('Error:', error);
+            alert("ERROR: Username taken");
         }
     };
     

@@ -25,12 +25,10 @@ export default function Login(){
                 alert("Login Successful")
                 navigate("/Joinroom", { state: {name: userName} });
             }
-            else{ // Login: Failed
-                alert("ERROR: Invalid user credentials");
-            }
 
-        } catch(error){ // Server Error
-            alert("ERROR: Connection to server failed");
+        } catch(error){ // Login: Failed
+            console.error('Error:', error);
+            alert("ERROR: Invalid user credentials");
         }
     };
 
