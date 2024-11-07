@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom'
 import Stack from 'react-bootstrap/Stack';
@@ -12,27 +12,27 @@ export default function Joinroom(){
     const navigate = useNavigate();
     const location = useLocation();
     const data = location.state;
-    const [userName, setUserName] = useState(data.name);
-    const [message, setMessage] = useState('')
+    const userName = useState(data.name);//const [userName, setUserName] = useState(data.name);
     const [room, setRoom] = useState('');
 
 
     const handleLogout = async () => {
-        try{
-            const response = await axios.post('https://realtime-chat-room-app.onrender.com/Logout', {}, { withCredentials: true });
-            setMessage('Logged out successfully');
+        try{ // Logout: Successful
+            const response = await axios.get('https://realtime-chat-room-app.onrender.com/Logout')
+            //const response = await axios.post('https://realtime-chat-room-app.onrender.com/Logout', {}, { withCredentials: true });
             // Redirect to login page
-            navigate("/Login");
-        } catch(error){
-            setMessage('Error logging out');
+            if (response.status == 200){
+                navigate("/Login");
+            }
+        }
+        catch(error){ // Logout: Failed
+            alert('Error logging out');
         }
     };
 
-
     const handleJoinRoom = () => {
-
-        const data = { name: userName, room: room}
-        navigate("/Chatroom", { state: data });
+        // Redirect user to requested room
+        navigate("/Chatroom", { state: { name: userName, room: room} });
       };
 
     return(
