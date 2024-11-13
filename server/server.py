@@ -1,8 +1,8 @@
 import eventlet
 eventlet.monkey_patch()
 
-from flask import Flask, session, request, jsonify, redirect, url_for, send_from_directory, make_response
-from flask_socketio import SocketIO, join_room, leave_room, send, emit
+from flask import Flask, session, request, jsonify, send_from_directory
+from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
 from flask_cors import CORS
 import bcrypt
@@ -36,83 +36,60 @@ CORS(app, supports_credentials=True, resources={r"/*": {"origins": "https://dw-r
 with app.app_context():
     db.create_all()
     
-# Dictionary of current users
+# Dictionary of current rooms
 rooms = {}
 
 @app.route('/')
 def serve_react_app():
     return send_from_directory(app.static_folder, 'index.html')
 
-# Hash the password
-def hashPwd(password):
-    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-# Check password hash
-def checkHashPwd(storedPwd, currPwd):
-    return bcrypt.checkpw(currPwd.encode('utf-8'), storedPwd)
-
-# Catch client layer's emitted message
+# Socket connection to catch client emitted message
 @socketio.on("message")
 def handleMessage(data):
     room = data['room']
     message = data['currMsg']
     username = data['userName']
-    emit("received_message", {'message': f'{username}: {message}'}, room=room) # Pass user msg to all clients
+    emit("received_message", {'message': f'{username}: {message}'}, room=room) # Pass user sent msg to all clients in room
 
+
+# Route to create a new user upon client sign up
 @app.route('/newUser', methods=['POST', 'GET'])
 def add_user():
-    data = request.get_json()
+    data = request.get_json() # collect user input
     
-    # If user already exists
+    # If user already exists in database return error
     if (users.query.filter_by(name=data['userName']).first()):
         return jsonify({"message": "ERROR: Username Taken"}), 401
-    else:
-        new_user = users(name=data['userName'], email=data['userEmail'], password=data['userPassword'])#bcrypt.hashpw(data['userPassword'].encode('utf-8'), bcrypt.gensalt()))#hashPwd(data['userPassword']))
+    else: # user doesn't exist, therefore create new account
+        new_user = users(name=data['userName'], email=data['userEmail'], password=data['userPassword'])
         db.session.add(new_user)
         db.session.commit()
         return jsonify({'message': 'User added successfully!'}), 201
 
+
+# Route to Login user upon client request
 @app.route('/LoginUser', methods=['POST', 'GET'])
 def login():
-    data = request.get_json()
-    user = users.query.filter_by(name=data['userName']).first()
+    data = request.get_json() # collect user input
+    user = users.query.filter_by(name=data['userName']).first() # locate user within users database
     
-    if user and (data['userPassword'] == user.password):#(bcrypt.checkpw(data['userPassword'].encode('utf-8'), user.password)):#checkHashPwd(user.password, data['userPassword']):
+    if user and (data['userPassword'] == user.password): # if user exists and password matches, set user session
         session['userName'] = user.name
         return jsonify({"message": "Logged in successfully"}), 200
-    else:
+    else: # not active user in database
         return jsonify({"message": "Invalid credentials"}), 401
 
+
+# Route to Logout user upon client request
 @app.route('/Logout', methods=['POST', 'GET'])
 def logout():
     session.pop('userName', None)
     session.clear()
     return jsonify({"message": "Logged out successfully"}), 200
 
-@app.route('/Session-check', methods=['GET'])
-def session_check():
-    username = session.get('userName')
-    if username:
-        return jsonify(username)
-    return jsonify({"message": "Not logged in"}), 401
 
-@app.route('/Room-check', methods=['GET'])
-def room_check():
-    room = session.get('room')
-    if room:
-        return jsonify(room)
-    return jsonify({"message": "User has no Room"}), 401
-
-# Route to join a specific room
-@app.route('/join_room_route', methods=['POST'])
-def join_room_route():
-    data = request.get_json()
-    room = data['room']
-    
-    session['room'] = room # Save room session
-    return jsonify({'message': f'Joining room {room}'})
-
-# Socket connection event to handle joining room
+# Socket connection event to handle active user request to join sepcific room
 @socketio.on('join')
 def on_join(data):
     username = data['userName']
@@ -125,11 +102,12 @@ def on_join(data):
     if username not in rooms[room]:
         rooms[room].append(username)
         
-    updateMembers(room)
+    updateMembers(room) # update displayed currently active users in specific room
         
-    emit('received_message', {'message': f'{username} has entered room {room}'}, room=room)
+    emit('received_message', {'message': f'{username} has entered room {room}'}, room=room) # send response back to client
     
-# Socket connection event to handle leaving room
+    
+# Socket connection event to handle user request to leave room
 @socketio.on('leave')
 def on_leave(data):
     username= data['userName']
@@ -142,16 +120,16 @@ def on_leave(data):
     if username in rooms[room]:
         rooms[room].remove(username)
         
-    updateMembers(room)
+    updateMembers(room) # update specific room's displayed online member list
         
-    emit("received_message", {'message': f'{username} has left room {room}'}, room=room)
+    emit("received_message", {'message': f'{username} has left room {room}'}, room=room) # send response back to client
     
 
-# Route to update current member list in room
+# Socket connection to update currently displayed member list in room
 @socketio.on('updateMemList')
 def updateMembers(room):
-    emit("updateMems", {'room': room, 'members': rooms[room]}, room=room)
+    emit("updateMems", {'room': room, 'members': rooms[room]}, room=room) # send updated list back to client
     
 
 if __name__ == '__main__':
-    socketio.run(app, host="https://dw-realtime-chatroom-app.netlify.app")#, debug=False, host='https://dw-realtime-chatroom-app.netlify.app/')
+    socketio.run(app, host="https://dw-realtime-chatroom-app.netlify.app")

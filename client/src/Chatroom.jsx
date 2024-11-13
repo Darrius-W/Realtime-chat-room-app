@@ -132,7 +132,6 @@ function ChatWindow(){
 
     if (currMsg !== ''){
       socket.emit('message', { userName, room, currMsg}) // Tell server who sent, what, and where message is sent
-      socket.emit('updateMemList', { room }) // Check active users in specific room
       setCurrMsg(''); // After messages updated, clear current message
     }
     event.target.reset() // clear input field
