@@ -55,7 +55,7 @@ def checkHashPwd(storedPwd, currPwd):
 @socketio.on("message")
 def handleMessage(data):
     room = data['room']
-    message = data['value']
+    message = data['currMsg']
     username = data['userName']
     emit("received_message", {'message': f'{username}: {message}'}, room=room) # Pass user msg to all clients
 
