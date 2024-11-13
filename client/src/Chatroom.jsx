@@ -37,7 +37,7 @@ export default function Chatroom(){
         <Col md={2} style={{width: '20vw'}}>
           <Container className="chatroom-grid chat-container d-none d-md-block">
              {/*Displays ALl Chat Room Members*/}
-            <ChatMembers />
+            <ChatMemberList />
           </Container>
         </Col>
         <Col md={7}>
@@ -176,23 +176,29 @@ function ChatWindow(){
 }
 
 
-// Displays all current members of the chat room
-function ChatMembers(){
+// Displays all current users within a given chat room
+function ChatMemberList(){
 
   const [userList, setUserList] = useState([]);
-  //const [room, setRoom] = useState('');
 
   useEffect(() => {
 
-    socket.on("updateMems", (data) => { // catch server response
-      //setRoom(data.room);
+    socket.on("updateMems", (data) => { // listen for new members entering room and send request to update list
       setUserList(data.members);
     });
+
+    return () => {
+      socket.off('updateMems'); // shut off socket listener event
+    };
   });
 
   return(
     <Card className="bg-transparent" style={{border: 'none', borderBottom: 'none'}}>
-      <Card.Header as="h2" className="p-2 mx-auto" style={{ color: '#fff', fontWeight: '600', borderBottom: '1px solid rgb(255, 255, 255, 0.1)'}}>Online</Card.Header>
+      <Card.Header
+        as="h2"
+        className="p-2 mx-auto"
+        style={{ color: '#fff', fontWeight: '600', borderBottom: '1px solid rgb(255, 255, 255, 0.1)'}}
+      >Online</Card.Header>
       <Card.Body>
         <ul style={{ listStyleType: 'none' }}>
           {userList.map((user, index) => (
