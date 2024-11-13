@@ -123,7 +123,7 @@ function ChatWindow(){
 
   // Target and store state of user's current message
   function handleChange(event){
-    setCurrMsg(event.target.currMsg);
+    setCurrMsg(event.target.value);
   }
 
   // Process single user's submitted message
