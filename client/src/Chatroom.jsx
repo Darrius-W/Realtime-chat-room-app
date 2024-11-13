@@ -93,28 +93,28 @@ function DisplayActiveUser(){
 }
 
 
-// Displays & inputs chat room messages
+// Displays all live chats and allows active user to send a new message
 function ChatWindow(){
   const location = useLocation();
   const data = location.state;
   const userName = data.name;
-  const [value, setValue] = useState(''); // User's current message
-  const [messages, setMessages] = useState([]); // Array of chat room messages
   const room = data.room;
+  const [currMsg, setCurrMsg] = useState(''); // User's current message
+  const [allMessages, setAllMessages] = useState([]); // List of all chat room messages
 
   useEffect(() => {
 
-    socket.on("received_message", (data) => { // catch server response
-      setMessages((prevMessages) => [...prevMessages, data.message]);
+    socket.on("received_message", (data) => { // If another user sends message, activate event
+      setAllMessages((prevMessages) => [...prevMessages, data.message]); // Update server room message list
     });
     
     return () => {
-      socket.off('received_message');
+      socket.off('received_message'); // shut off socket listener event
     };
   }, []);
   
 
-  // Keeps display at most recent messages
+  // Scroll to the most recently submitted message in the chat
   const AlwaysScrollToBottom = () => {
     const elementRef = useRef();
     useEffect(() => elementRef.current.scrollIntoView());
@@ -123,17 +123,17 @@ function ChatWindow(){
 
   // Target and store state of user's current message
   function handleChange(event){
-    setValue(event.target.value);
+    setCurrMsg(event.target.currMsg);
   }
 
   // Process single user's submitted message
   const handleSendMessage = (event) => {
     event.preventDefault();
 
-    if (value !== ''){
-      socket.emit('message', { userName, room, value})
-      socket.emit('updateMemList', { room })
-      setValue('');
+    if (currMsg !== ''){
+      socket.emit('message', { userName, room, currMsg}) // Tell server who sent, what, and where message is sent
+      socket.emit('updateMemList', { room }) // Check active users in specific room
+      setCurrMsg(''); // After messages updated, clear current message
     }
     event.target.reset() // clear input field
   }
@@ -143,7 +143,7 @@ function ChatWindow(){
     <>
       <Container className="chatWindow">
         <Container className="chatDisplay" style={{ height: '100vh'}}>
-          {messages.map((msg, index) => (
+          {allMessages.map((msg, index) => (
             <p className="msg-list p-2 mx-auto" style={{ color: '#fff' }} key={index}>{msg}</p>
           ))}
           <AlwaysScrollToBottom />
