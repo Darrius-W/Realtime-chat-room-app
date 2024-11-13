@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import io from "socket.io-client"
 import { useLocation, useNavigate } from "react-router-dom"
-import axios from 'axios'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -15,19 +14,17 @@ const endpoint = "https://realtime-chat-room-app.onrender.com";
 const socket = io.connect(`${endpoint}`);
 
 
+// Primary chatroom component to house all the chatroom's subcomponents
 export default function Chatroom(){
 
   const location = useLocation();
   const data = location.state;
-  const [userName, setUserName] = useState(data.name);  
-  const [room, setRoom] = useState(data.room);
-  const navigate = useNavigate();
-  const userNameData = { name: userName }
+  const userName = data.name;
+  const room = data.room;
 
-  
   const joinRoom = () => {
     if (userName !== '' && room !== '') {
-      socket.emit('join', { userName, room });
+      socket.emit('join', { userName, room }); // Send request to server, joining user to room
     }
   }
 
@@ -39,7 +36,7 @@ export default function Chatroom(){
       <Row className="justify-content-center">
         <Col md={2} style={{width: '20vw'}}>
           <Container className="chatroom-grid chat-container d-none d-md-block">
-             {/*Chat Room Members*/}
+             {/*Displays ALl Chat Room Members*/}
             <ChatMembers />
           </Container>
         </Col>
@@ -47,12 +44,12 @@ export default function Chatroom(){
           <Container className="chatroom-grid chat-container">
             <Row>
               <Col>
-                {/* Current Chat User */}
-                <CurrentUser />
+                {/* Displays the Currently Active User */}
+                <DisplayActiveUser />
               </Col>
             </Row>
             <Row>
-              {/* Display Window */}
+              {/* Displays The Live Chat Window */}
               <ChatWindow />
             </Row>
           </Container>
@@ -63,20 +60,20 @@ export default function Chatroom(){
 }
   
 
-// Displays the current user
-function CurrentUser(){
+// Displays the currently active user, giving them the ability to exit the room
+function DisplayActiveUser(){
   const location = useLocation();
   const data = location.state;
-  const [userName, setUserName] = useState(data.name);
-  const [room, setRoom] = useState(data.room);
+  const userName = data.name;
+  const room = data.room;
   const navigate = useNavigate();
   const userNameData = { name: userName }
 
   const leaveRoom = () => {
     if (userName !== '' && room !== '') {
-      socket.emit('leave', { userName, room });
+      socket.emit('leave', { userName, room }); // Upon request, send server request to remove user from room
     }
-    navigate('/Joinroom', { state: userNameData });
+    navigate('/Joinroom', { state: userNameData }); // Redirect active user to select another room to join
   }
 
   return(
@@ -84,7 +81,11 @@ function CurrentUser(){
       <div className="currUser" style={{ borderBottom: '1px solid rgb(255, 255, 255, 0.1)' }}>
         <Row>
           <Col><h2 className="p-2 mx-auto" style={{ color: '#fff', fontWeight: '600'}}>Room: { room }</h2></Col>
-          <Col className="d-flex justify-content-end align-items-center"><Button className="bg-danger back-btn p-2" id="leaveBtn" onClick={ leaveRoom }>Exit Room</Button></Col>
+          <Col className="d-flex justify-content-end align-items-center">
+            <Button 
+              className="bg-danger back-btn p-2" id="leaveBtn" onClick={ leaveRoom }>Exit Room
+            </Button>
+          </Col>
         </Row>
       </div>
     </>
@@ -96,10 +97,10 @@ function CurrentUser(){
 function ChatWindow(){
   const location = useLocation();
   const data = location.state;
-  const [userName, setUserName] = useState(data.name);
+  const userName = data.name;
   const [value, setValue] = useState(''); // User's current message
   const [messages, setMessages] = useState([]); // Array of chat room messages
-  const [room, setRoom] = useState(data.room);
+  const room = data.room;
 
   useEffect(() => {
 
@@ -128,7 +129,7 @@ function ChatWindow(){
   // Process single user's submitted message
   const handleSendMessage = (event) => {
     event.preventDefault();
-    //joinRoom();
+
     if (value !== ''){
       socket.emit('message', { userName, room, value})
       socket.emit('updateMemList', { room })
@@ -179,12 +180,12 @@ function ChatWindow(){
 function ChatMembers(){
 
   const [userList, setUserList] = useState([]);
-  const [room, setRoom] = useState('');
+  //const [room, setRoom] = useState('');
 
   useEffect(() => {
 
     socket.on("updateMems", (data) => { // catch server response
-      setRoom(data.room);
+      //setRoom(data.room);
       setUserList(data.members);
     });
   });

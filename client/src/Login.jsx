@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Stack from 'react-bootstrap/Stack';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import './App.css'
+import './App.css';
 
 export default function Login(){
 
@@ -18,11 +18,11 @@ export default function Login(){
         event.preventDefault() // Prevents refresh so link can redirect user
         try {
             // Send request to server to authenticate user given user entered credentials
-            const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true })
+            const response = await axios.post('https://realtime-chat-room-app.onrender.com/LoginUser', { userName, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true });
             
             if(response.status === 200){ // Login: Successful
                 // Redirect user to joinroom page
-                alert("Login Successful")
+                alert("Login Successful");
                 navigate("/Joinroom", { state: {name: userName} });
             }
 

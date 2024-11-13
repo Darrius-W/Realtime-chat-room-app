@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Stack from 'react-bootstrap/Stack';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import './App.css'
+import './App.css';
 
 export default function Signup(){
 
@@ -25,7 +25,7 @@ export default function Signup(){
             }
 
             // Send request to server to create a new user
-            const response = await axios.post('https://realtime-chat-room-app.onrender.com/newUser', { userName, userEmail, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true })
+            const response = await axios.post('https://realtime-chat-room-app.onrender.com/newUser', { userName, userEmail, userPassword }, {headers: { 'Content-Type': 'application/json' }}, { withCredentials: true });
     
             if (response.status === 201) { // Signup: Successful
                 // Redirect user to joinroom page
