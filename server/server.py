@@ -1,6 +1,3 @@
-import eventlet
-eventlet.monkey_patch()
-
 from flask import Flask, session, request, jsonify, send_from_directory
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
@@ -82,7 +79,7 @@ def login():
 
 
 # Route to Logout user upon client request
-@app.route('/Logout', methods=['POST', 'GET'])
+@app.route('/Logout', methods=['POST'])
 def logout():
     session.pop('userName', None)
     session.clear()
