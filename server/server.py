@@ -82,7 +82,7 @@ def login():
 
 
 # Route to Logout user upon client request
-@app.route('/Logout', methods=['POST'])
+@app.route('/Logout', methods=['POST', 'GET'])
 def logout():
     session.pop('userName', None)
     session.clear()
