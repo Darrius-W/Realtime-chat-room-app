@@ -21,7 +21,7 @@ export default function Joinroom(){
             // Send request to server to access logout functionality
             const response = await axios.get('https://realtime-chat-room-app.onrender.com/Logout');
             // Redirect to login page
-            if (response.status == 200){
+            if (response.status === 200){
                 navigate("/Login");
             }
         }
