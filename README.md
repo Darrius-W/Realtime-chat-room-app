@@ -41,13 +41,14 @@ https://dw-realtime-chatroom-app.netlify.app/
 
 ### Start the front end:
 
-npm start
+`npm start`
 
 ### Navigate to the server folder:
 
 `cd server`
 
-Start the backend:
+### Start the backend:
+
 `flask --app server.py run`
 <br>
 
