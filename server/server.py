@@ -88,6 +88,10 @@ def logout():
     session.clear()
     return jsonify({"message": "Logged out successfully"}), 200
 
+@app.route('/ping', methods=['GET'])
+def ping():
+    return {"message": "pong"}
+
 
 # Socket connection event to handle active user request to join sepcific room
 @socketio.on('join')
