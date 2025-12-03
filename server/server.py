@@ -12,7 +12,7 @@ from datetime import timedelta
 
 app = Flask(__name__, static_folder='static') # Initialize flask app
 app.config['SECRET_KEY'] = 'secret!'
-SQLALCHEMY_DATABASE_URL = "postgresql://chatroom_appdb_za4h_user:rU9A6cTb9tsTlFvjIuqXWffdHzvSAGH2@dpg-d444jl6mcj7s73bob3jg-a/chatroom_appdb_za4h"
+SQLALCHEMY_DATABASE_URL = "postgresql://chatroom_appdb_axqv_user:MkIcFasW5NR8Q6Cm9vFHUbwprSRxylc8@dpg-d4ob0m6r433s73clt57g-a/chatroom_appdb_axqv"
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_TYPE'] = 'filesystem' # Store sessions in server's filesystem
