@@ -14,7 +14,7 @@ export default function Signup({ onSignup, onSwitchToLogin }) {
 
     const cleanName = usernameInput.trim();
 
-    // 1. Username Validation (FIXED: Set to 6 characters to match your requirements)
+    // 1. Username Validation
     if (!cleanName) {
       setErrorMessage("Username cannot be empty.");
       return;
@@ -71,7 +71,7 @@ export default function Signup({ onSignup, onSwitchToLogin }) {
         )}
 
         <form onSubmit={handleSubmit}>
-          {/* Username Input (FIXED: Placeholder updated to match 6 character requirement) */}
+          {/* Username Input */}
           <div className="cs-login-field-group">
             <input
               type="text"

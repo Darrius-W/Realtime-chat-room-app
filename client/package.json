@@ -4,6 +4,9 @@
   "private": true,
   "proxy": "https://realtime-chat-room-app.onrender.com",
   "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^2.1.1",
+    "@chatscope/chat-ui-kit-styles": "^1.4.0",
+    "@multiavatar/multiavatar": "^1.0.7",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

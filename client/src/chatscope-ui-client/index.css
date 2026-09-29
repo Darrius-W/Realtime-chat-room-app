@@ -157,7 +157,7 @@ html, body, #root {
   height: 100vh;
   background-color: #ebedf0;
   
-  /* FIXED: Enabled scroll context and padding margins for shallow view spaces */
+  /* Enabled scroll context and padding margins for shallow view spaces */
   box-sizing: border-box;
   overflow-y: auto;
   min-height: 100vh;
@@ -173,7 +173,7 @@ html, body, #root {
   text-align: center;
   box-sizing: border-box;
   
-  /* FIXED: Adjusted default padding and center-locking parameters */
+  /* Adjusted default padding and center-locking parameters */
   padding: 32px 28px 24px 28px;
   margin: auto;
 }
@@ -289,7 +289,7 @@ html, body, #root {
    DYNAMIC RESPONSIVE MEDIA BREAKPOINTS (ALL SCREEN AND INTERFACE PROFILES)
    ========================================================================= */
 
-/* FIXED: Mobile Landscape constraints for shallow phone view heights */
+/* Mobile Landscape constraints for shallow phone view heights */
 @media (max-height: 520px) {
   .cs-login-box {
     padding: 20px 24px 16px 24px;
@@ -355,7 +355,7 @@ html, body, #root {
     display: flex !important;
   }
   
-  /* CRITICAL SEARCH FIX: Overrides Chatscope default hiding to force input visibility on phones */
+  /* Overrides Chatscope default hiding to force input visibility on phones */
   .cs-sidebar .cs-search {
     display: flex !important;
   }

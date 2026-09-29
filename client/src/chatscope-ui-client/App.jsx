@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
-// Import the exact same native offline package used in your working Login.jsx
 import multiavatar from '@multiavatar/multiavatar';
 import {
   MainContainer,
