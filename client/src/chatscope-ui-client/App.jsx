@@ -20,7 +20,7 @@ import {
 
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 
-// Helper function that matches your Login.jsx to generate offline data strings instantly
+// Local offline avatar string generation
 const getOfflineAvatar = (name) => {
   const rawSvgCode = multiavatar(name.trim());
   return `data:image/svg+xml;utf8,${encodeURIComponent(rawSvgCode)}`;
@@ -30,7 +30,7 @@ const INITIAL_CONVERSATIONS = {
   1: {
     id: 1,
     name: "Zoe",
-    avatar: getOfflineAvatar("Zoe"), // Generates local data string instantly
+    avatar: getOfflineAvatar("Zoe"),
     status: "available",
     info: "Software Engineer",
     unread: 2,
@@ -43,7 +43,7 @@ const INITIAL_CONVERSATIONS = {
   2: {
     id: 2,
     name: "Lilly",
-    avatar: getOfflineAvatar("Lilly"), // Generates local data string instantly
+    avatar: getOfflineAvatar("Lilly"),
     status: "away",
     info: "UI/UX Designer",
     unread: 0,
@@ -91,7 +91,7 @@ export default function App() {
       [newId]: {
         id: newId,
         name: name.trim(),
-        avatar: getOfflineAvatar(name.trim()), // Local offline avatar string generation
+        avatar: getOfflineAvatar(name.trim()),
         status: "available",
         info: "New Friend",
         unread: 0,
@@ -113,7 +113,7 @@ export default function App() {
       [newId]: {
         id: newId,
         name: groupName.trim(),
-        avatar: getOfflineAvatar(groupName.trim()), // Local offline avatar string generation
+        avatar: getOfflineAvatar(groupName.trim()), 
         status: "available",
         info: "Group Chat Rooms",
         unread: 0,
@@ -208,7 +208,6 @@ export default function App() {
             </button>
           </div>
 
-          {/* ORIGINAL LOOK: Isolated search bar to retain pristine width styling scales */}
           <Search 
             placeholder="Search contacts..." 
             value={searchQuery}

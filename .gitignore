@@ -1,17 +1,22 @@
-# VSCode
-.vscode/*
-!.vscode/setting.json
-!.vscode/launch.json
-!.vscode/c_cpp_properties.json
-*.code-workspace
-.history/
+# Environment variables and secrets
+server/.env
+server/.env.development
+server/.env.production
+server/.env.local
+*.local
+!server/.env.example
+
+# Python
 .venv/
 instance/
 __pycache__/
+.history/
 
+# JavaScript / Node.js
+node_modules/
+dist/
+dist-ssr/
 
-
-# Chatscope-ui port over
 # Logs
 logs
 *.log
@@ -21,18 +26,19 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# IDEs and Editors
 .vscode/*
+!.vscode/setting.json
+!.vscode/launch.json
+!.vscode/c_cpp_properties.json
 !.vscode/extensions.json
-.idea
-.DS_Store
+*.code-workspace
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# System Files
+.DS_Store

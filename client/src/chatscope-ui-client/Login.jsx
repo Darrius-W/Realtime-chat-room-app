@@ -27,7 +27,6 @@ export default function Login({ onLogin, onSwitchToSignup }) {
       setIsSubmitting(true);
       const rawSvgCode = multiavatar(cleanName);
 
-      // Execute login against parent function context
       await onLogin({
         name: cleanName,
         password: passwordInput,
@@ -35,7 +34,6 @@ export default function Login({ onLogin, onSwitchToSignup }) {
       });
       
     } catch (err) {
-      // Captures server rejections or validation failures passed up through the chain
       setErrorMessage(err?.message || "Invalid username or password. Please try again.");
     } finally {
       setIsSubmitting(false);
