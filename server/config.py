@@ -5,8 +5,10 @@ from dotenv import load_dotenv
 # Locate and read .env
 load_dotenv()
 
-# Configuration Class: Extracts sensitive data from system ennvironment. Used to isolate 
-# system settings from logical operations
+'''
+Configuration Class: Extracts sensitive data from system ennvironment. Used to isolate 
+system settings from logical operations 
+'''
 class Config:
     
     # Secure token used by Flask to encrypt server-side session cookies
