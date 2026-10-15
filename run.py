@@ -1,11 +1,11 @@
-import eventlet
+import gevent.monkey
 # Force multitasking and asynchronous execution to prevent blocking on live WebSocket connections
-eventlet.monkey_patch()
+gevent.monkey.patch_all()
 
 from flask import Flask
 from flask_cors import CORS
 from server.config import Config
-from server.extensions import db, socketio, server_session
+from server.extensions import db, socketio
 
 def create_app():
     app = Flask(__name__, static_folder='static') # create main Flask server and tell it where to find frontend files
@@ -14,7 +14,6 @@ def create_app():
 
     # Plug empty framework tools into this active server
     db.init_app(app)
-    server_session.init_app(app)
     socketio.init_app(app)
 
     # Tells backend to trust requests coming from local frontend
@@ -35,4 +34,4 @@ app = create_app()
 if __name__ == '__main__':
     import server.sockets
 
-    socketio.run(app, host="localhost", port=5000)
+    socketio.run(app, host="127.0.0.1", port=5000)

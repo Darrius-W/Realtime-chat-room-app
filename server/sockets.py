@@ -1,5 +1,5 @@
 from flask_socketio import join_room, leave_room, emit
-from extensions import socketio
+from server.extensions import socketio
 
 # Temp global storage for tracking active rooms and their members
 rooms = {}

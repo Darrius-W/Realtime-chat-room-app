@@ -15,13 +15,15 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY', 'default_fallback_secret_key')
     
     # Target location indicating where database is
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        'DATABASE_URL', 
+        'sqlite:///local_chat.db'
+    )
+
     # Disable modification tracking to reduce memory overhead
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # Manages session storage and browser-close cleanup
-    SESSION_TYPE = 'filesystem'
     SESSION_PERMANENT = False
     
     # Limits active session longevity

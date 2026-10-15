@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, session, send_from_directory, current_app
 import bcrypt
-from extensions import db
-from models import User
+from server.extensions import db
+from server.models import User
 
 # Container that holds all the skeletons of my routes until activation time
 auth_bp = Blueprint('auth', __name__)
