@@ -28,10 +28,23 @@ export default function Login({ onLogin, onSwitchToSignup }) {
       setIsSubmitting(true);
       const rawSvgCode = multiavatar(cleanName);
 
+      /*
+      // Backend request
       const response = await axios.post("/LoginUser", {
         userName: cleanName,
         userPassword: passwordInput,
       })
+      */
+      // Set up local storage connection for account authentication
+      const existingUsers = JSON.parse(localStorage.getItem("local_users") || "[]");
+
+      // Find user in local storage
+      const foundUser = existingUsers.find(u => u.userName === cleanName);
+
+      // Verify if user exists and password matches
+      if (!foundUser || foundUser.userPassword !== passwordInput){
+        throw new Error("Invalid credentials configuration.");
+      }
 
       await onLogin({
         name: cleanName,
