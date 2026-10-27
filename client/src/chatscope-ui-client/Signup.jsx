@@ -40,6 +40,24 @@ export default function Signup({ onSignup, onSwitchToLogin }) {
       setIsSubmitting(true);
       const rawSvgCode = multiavatar(cleanName);
 
+      // Pull existing accounts from local storage, otherwise initialize empty storage array
+      const existingUsers = JSON.parse(localStorage.getItem("local_users") || "[]");
+
+      // Check if username taken, if so return error
+      const userExists = existingUsers.some(u => u.userName === cleanName);
+      if (userExists){
+        throw new Error("ERROR: Username Taken");
+      }
+
+      // Create new user account using user input and store in local database storage
+      const newUser = {
+        userName: cleanName,
+        userPassword: passwordInput
+      };
+
+      existingUsers.push(newUser);
+      localStorage.setItem("local_users", JSON.stringify(existingUsers));
+
       // Execute signup function callback
       await onSignup({
         name: cleanName,
@@ -47,8 +65,11 @@ export default function Signup({ onSignup, onSwitchToLogin }) {
         avatar: `data:image/svg+xml;utf8,${encodeURIComponent(rawSvgCode)}`
       });
 
+      alert("Account created successfully");
+      onSwitchToLogin();
+
     } catch (err) {
-      setErrorMessage(err?.message || "Registration failed. Please try again.");
+      setErrorMessage(err.message || "Registration failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

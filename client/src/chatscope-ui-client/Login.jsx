@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from "axios";
 import multiavatar from '@multiavatar/multiavatar';
 
 export default function Login({ onLogin, onSwitchToSignup }) {
@@ -26,6 +27,11 @@ export default function Login({ onLogin, onSwitchToSignup }) {
     try {
       setIsSubmitting(true);
       const rawSvgCode = multiavatar(cleanName);
+
+      const response = await axios.post("/LoginUser", {
+        userName: cleanName,
+        userPassword: passwordInput,
+      })
 
       await onLogin({
         name: cleanName,
