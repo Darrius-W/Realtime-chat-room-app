@@ -1,10 +1,10 @@
+import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
+import './App.css';
+
 import { useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
-import Chatroom from './Chatroom';
-
-import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
-import './App.css';
+import Chatroom from './chatroom/Chatroom';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null); 

@@ -1,0 +1,110 @@
+/* Chatroom.css - styles for Chatroom.jsx (kept separate from the Vite starter App.css) */
+
+.app-dashboard-wrapper {
+  --chat-border: #e6ebf5;
+  --chat-online: #27ae60;
+  --chat-accept: #27ae60;
+  --chat-decline: #e74c3c;
+  --chat-empty-bg: #f9fafe;
+  --chat-empty-text: #b3c1d1;
+}
+
+/* ---- sidebar: profile header ---- */
+
+.chat-profile-header {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-profile-main {
+  display: flex;
+  align-items: center;
+}
+
+.chat-profile-meta {
+  margin-left: 10px;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.chat-profile-status {
+  margin: 0;
+  font-size: 12px;
+  color: var(--chat-online);
+}
+
+.chat-logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ---- sidebar: footer buttons ---- */
+
+.chat-sidebar-footer {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid var(--chat-border);
+}
+
+.chat-footer-btn {
+  flex: 1;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* ---- chat pane ---- */
+
+.chat-empty-state {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--chat-empty-bg);
+  color: var(--chat-empty-text);
+}
+
+/* ---- chat request bubble ---- */
+
+.chat-request {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 220px;
+}
+
+.chat-request-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-btn {
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.chat-btn--accept {
+  background: var(--chat-accept);
+}
+
+.chat-btn--decline {
+  background: var(--chat-decline);
+}
